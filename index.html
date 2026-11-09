@@ -1,0 +1,1379 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Photography by Justin Khyle. A collection of places I've been and people I've met.">
+<meta name="color-scheme" content="dark">
+<!-- Link previews (iMessage, Instagram, LinkedIn, etc.). Update SITE_URL to where the site lives, and add photos/preview.jpg (1200x630). -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Justin Khyle Photography">
+<meta property="og:title" content="Justin Khyle Photography">
+<meta property="og:description" content="A collection of places I've been and people I've met.">
+<meta property="og:url" content="https://justin-khyle.github.io/photography/">
+<meta property="og:image" content="https://justin-khyle.github.io/photography/photos/preview.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#121722">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23121722'/%3E%3Ccircle cx='32' cy='32' r='17' fill='none' stroke='%23E3B26B' stroke-width='5'/%3E%3Ccircle cx='32' cy='32' r='6' fill='%23E3B26B'/%3E%3C/svg%3E">
+<title>Justin Khyle Photography</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap">
+<style>
+/* Base reset */
+[hidden] { display: none !important; }
+body { margin: 0; }
+img { max-width: 100%; }
+:root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+/* Layout: contact-sheet grid — every photo is a numbered frame with its exposure data, like a strip off the scanner */
+:root {
+  /* Night Bay: deep navy with warm amber, like the Bay Bridge at night */
+  --paper: #121722;   /* night water */
+  --sheet: #1A2130;   /* raised panel */
+  --ink: #E8E4DA;     /* warm off-white text */
+  --muted: #9AA1AE;   /* fog gray */
+  --rule: #2C3546;    /* hairlines */
+  --accent: #E3B26B;  /* bridge-light amber */
+  --clay: #D98A5E;    /* warm secondary */
+  --accent-ink: #121722;
+  --light: #EEEAE0;   /* text over photos */
+  --shade: 8,11,18;   /* navy-black for shadows and overlays (rgb) */
+  color-scheme: dark;
+  --display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --body: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  /* Two faces only: Bricolage for headings, Instrument Sans for everything else */
+  --s1: .75rem; --s2: 1rem; --s3: 1.5rem; --s4: 2.5rem; --s5: 4rem;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--paper); color: var(--ink);
+  font: 400 1rem/1.6 var(--body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--paper); }
+.wrap { max-width: 1180px; margin: 0 auto; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+section[tabindex="-1"]:focus { outline: none; }
+
+/* Header */
+header.top {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  background: var(--paper); border-bottom: 1px solid var(--rule);
+  /* Span the full window: cancel the body's side gutter, then re-add it inside */
+  margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px))) calc(-1 * max(16px, env(safe-area-inset-right, 0px)));
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: var(--s2); padding-block: var(--s1); flex-wrap: wrap; }
+.brand { font: 800 1.15rem/1 var(--display); letter-spacing: -.01em; text-decoration: none; }
+.brand small { font: 600 .7rem/1.2 var(--body); text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin-left: .5rem; }
+nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: var(--s3); flex-wrap: wrap; }
+nav a { text-decoration: none; font-weight: 500; font-size: .95rem; color: var(--muted); }
+nav a:hover, nav a[aria-current="true"] { color: var(--ink); }
+nav a .soon { font: 600 .7rem/1.2 var(--body); text-transform: uppercase; letter-spacing: .1em; border: 1px solid var(--rule); border-radius: 3px; padding: 1px 4px; margin-left: 4px; }
+
+/* Hero */
+/* Full-bleed photo hero: band spans the window, text stays aligned to the page column */
+html, body { overflow-x: clip; }
+.hero {
+  position: relative; isolation: isolate; overflow: hidden;
+  margin-inline: calc(50% - 50vw); padding-inline: calc(50vw - 50%);
+  min-height: min(78vh, 760px); color: var(--light);
+}
+.hero-bg { position: absolute; inset: -6% 0; width: 100%; height: 112%; max-width: none; object-fit: cover; z-index: -2; will-change: transform, opacity; transition: opacity .9s var(--ease, ease); }
+.hero-bg.off { opacity: 0; }
+.hero.viewable { cursor: zoom-in; }
+.hero.viewable .h1, .hero.viewable > div { cursor: auto; }
+.lb.single #lb-prev, .lb.single #lb-next, .lb.single #lb-count, .lb.single .hint { display: none !important; }
+/* Category tabs show the photo only; text returns on Home */
+.hero .h1, .hero > div { transition: opacity .5s var(--ease, ease), transform .5s var(--ease, ease), visibility 0s; }
+.hero.bare .h1, .hero.bare > div { opacity: 0; transform: translateY(12px); visibility: hidden; transition: opacity .4s var(--ease, ease), transform .4s var(--ease, ease), visibility 0s .4s; }
+.hero.bare::after { opacity: .6; }
+.hero-cat {
+  grid-column: 1 / -1; grid-row: 1; align-self: end; min-width: 0;
+  margin: 0; display: flex; align-items: baseline; gap: var(--s2); flex-wrap: wrap;
+  opacity: 0; transform: translateY(14px); visibility: hidden;
+  transition: opacity .4s var(--ease, ease), transform .4s var(--ease, ease), visibility 0s .4s;
+}
+.hero-cat strong { font: 800 clamp(3rem, 10vw, 7.5rem)/.9 var(--display); letter-spacing: -.04em; text-shadow: 0 2px 30px rgba(var(--shade),.4); color: var(--cat-color, var(--light)); transition: color .5s ease; }
+/* One earth tone per tab, light enough to read over the photos */
+.hero-cat[data-cat="Street"]    { --cat-color: #FFB085; } /* bright clay */
+.hero-cat[data-cat="Landscape"] { --cat-color: #D9EC8E; } /* bright moss */
+.hero-cat[data-cat="Portrait"]  { --cat-color: #FFC9D3; } /* bright rose */
+/* Darken behind the title so the color always separates from the photo */
+.hero-cat strong { text-shadow: 0 1px 2px rgba(var(--shade),.55), 0 4px 28px rgba(var(--shade),.7); }
+/* Title hover: letters lift one after another and an underline draws in, in the tab's color */
+.hero-cat strong { position: relative; display: inline-block; cursor: default; white-space: nowrap; }
+.hero-cat strong .ch { display: inline-block; transition: transform .45s cubic-bezier(.34,1.56,.64,1); transition-delay: calc(var(--i) * 35ms); }
+.hero-cat strong::after { content: ""; position: absolute; left: 0; bottom: -.06em; height: .06em; width: 100%;
+  background: var(--cat-color, var(--light)); transform: scaleX(0); transform-origin: left; transition: transform .5s cubic-bezier(.22,.61,.36,1); border-radius: 99px; }
+@media (hover: hover) {
+  .hero-cat strong:hover .ch { transform: translateY(-.12em) rotate(-3deg); }
+  .hero-cat strong:hover::after { transform: scaleX(1); }
+}
+/* Name in the header: same letter wave + underline as the tab titles */
+.brand { position: relative; display: inline-block; }
+.brand .ch { display: inline-block; transition: transform .45s cubic-bezier(.34,1.56,.64,1); transition-delay: calc(var(--i) * 22ms); }
+.brand .w { display: inline-block; white-space: nowrap; }
+.brand::after { content: ""; position: absolute; left: 0; right: 0; bottom: -.3rem; height: 2px; background: var(--accent);
+  transform: scaleX(0); transform-origin: left; transition: transform .5s cubic-bezier(.22,.61,.36,1); border-radius: 99px; }
+@media (hover: hover) {
+  .brand:hover .ch { transform: translateY(-.26em) rotate(-6deg); }
+  .brand:hover::after { transform: scaleX(1); }
+}
+.brand:focus-visible::after { transform: scaleX(1); }
+/* Home headline hover: same letter wave, word by word so lines still wrap naturally;
+   the highlighted words get the underline */
+.hero .h1 .w { display: inline-block; white-space: nowrap; }
+.hero .h1 .ch { display: inline-block; transition: transform .45s cubic-bezier(.34,1.56,.64,1); transition-delay: calc(var(--i) * 14ms); }
+.hero .h1 em { position: relative; display: inline-block; }
+.hero .h1 em::after { content: ""; position: absolute; left: 0; bottom: -.04em; height: .06em; width: 100%;
+  background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform .55s cubic-bezier(.22,.61,.36,1) .25s; border-radius: 99px; }
+@media (hover: hover) {
+  .hero .h1:hover .ch { transform: translateY(-.1em) rotate(-3deg); }
+  .hero .h1:hover em::after { transform: scaleX(1); }
+}
+.hero.bare::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(ellipse 70% 90% at 0% 100%, rgba(var(--shade),.62), rgba(var(--shade),0) 70%); }
+.hero-cat > span { font: 500 .85rem var(--body); color: rgba(238,234,224,.82); font-variant-numeric: tabular-nums; }
+.hero.bare .hero-cat { opacity: 1; transform: none; visibility: visible; transition: opacity .6s var(--ease, ease) .15s, transform .6s var(--ease, ease) .15s, visibility 0s; }
+.hero > .h1 { grid-row: 1; grid-column: 1; }
+.hero > div { grid-row: 1; grid-column: 2; }
+@media (max-width: 760px) {
+  .hero-cat { grid-row: 1 / span 2; }
+  .hero > div { grid-row: 2; grid-column: 1; }
+}
+.hero::after { transition: opacity .6s var(--ease, ease); }
+.hero::after { content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(180deg, rgba(var(--shade),.15) 0%, rgba(var(--shade),.28) 45%, rgba(var(--shade),.82) 100%); }
+.hero .sample { position: absolute; right: max(16px, env(safe-area-inset-right, 0px)); top: var(--s2); font: 600 .62rem/1.2 var(--body); letter-spacing: .1em; text-transform: uppercase; background: rgba(0,0,0,.45); color: #fff; padding: 2px 6px; border-radius: 2px; }
+.hero { padding-block: var(--s5) var(--s4); display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: var(--s4); align-items: end; }
+.hero .h1 { font: 800 clamp(2.6rem, 7vw, 5.6rem)/.92 var(--display); letter-spacing: -.035em; margin: 0; text-wrap: balance; }
+.hero .h1 em { font-style: normal; color: #F0C987; }
+.hero .h1 { text-shadow: 0 2px 30px rgba(var(--shade),.4); }
+.hero p { margin: 0; color: rgba(238,234,224,.9); max-width: 38ch; font-size: 1.05rem; }
+.kit { margin-top: var(--s2); font: 500 .85rem/1.5 var(--body); color: rgba(238,234,224,.75) !important; }
+
+/* Filters */
+.bar { display: flex; justify-content: space-between; align-items: center; gap: var(--s2); flex-wrap: wrap; border-top: 1px solid var(--ink); padding-block: var(--s1); }
+.bar h2 { font: 600 .7rem/1.2 var(--body); text-transform: uppercase; letter-spacing: .1em; margin: 0; }
+.filters { display: flex; gap: .45rem; flex-wrap: wrap; }
+.filters button {
+  font: 500 .92rem var(--body); color: var(--ink); background: transparent;
+  border: 1px solid var(--rule); border-radius: 999px; padding: .42rem 1.05rem; cursor: pointer;
+}
+.filters button[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+/* Contact sheet */
+.sheet { background: var(--sheet); padding: var(--s2); margin-bottom: var(--s5); }
+/* Masonry: photos stack in columns at their own height, so mixed portrait/landscape frames leave no holes */
+.grid { columns: 3 260px; column-gap: var(--s2); }
+/* Home: justified collage. Every row is the same height and fills the width;
+   each photo keeps its full shape (no cropping), wider photos simply take more of the row. */
+/* Work index cards */
+.grid.index { display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s4) var(--s3); }
+.card { display: grid; gap: .55rem; text-decoration: none; color: var(--ink); }
+.card-img { display: block; aspect-ratio: 4 / 3; max-width: 100%; overflow: hidden; background: var(--rule); }
+.card-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .8s var(--ease, ease), filter .5s ease; }
+.card-title { font: 800 clamp(1.4rem, 2.4vw, 1.9rem)/1.05 var(--display); letter-spacing: -.02em; margin-top: .35rem; transition: color .3s ease; }
+.card-count { font: 400 .85rem var(--body); color: var(--muted); }
+.card:hover .card-img img { transform: scale(1.04); }
+.card[data-cat="Street"]:hover .card-title { color: #FFB085; }
+.card[data-cat="Landscape"]:hover .card-title { color: #D9EC8E; }
+.card[data-cat="Portrait"]:hover .card-title { color: #FFC9D3; }
+.card:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; }
+@media (max-width: 760px) { .grid.index { grid-template-columns: minmax(0, 1fr); gap: var(--s4); } }
+.on-index .hero, .on-index .bar { display: none !important; }
+.on-index #work { padding-top: var(--s5); }
+.on-index .sheet { background: none; padding: 0; margin-inline: 0 !important; }
+.index-top { display: none; }
+.on-index .index-top { display: block; }
+.index-label { font: 600 .7rem/1.2 var(--body); text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin: 0 0 var(--s2); }
+.collage-panel { background: var(--sheet); padding: var(--s2); margin-bottom: var(--s5); }
+.collage { display: flex; flex-wrap: wrap; gap: var(--s2); }
+.collage .frame { margin: 0; min-width: 0; }
+.collage .frame button { all: unset; cursor: zoom-in; display: block; width: 100%; }
+.collage .frame button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.collage .ph { width: 100%; overflow: hidden; }
+.collage .ph img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .7s var(--ease, ease); }
+.collage .frame button:hover .ph img { transform: scale(1.035); }
+@media (max-width: 760px) { .collage { gap: var(--s1); } .collage-panel { padding: var(--s1); } }
+.grid:not(.strip):not(.index) { columns: auto; display: flex; flex-wrap: wrap; gap: var(--s2); --row: 300px; }
+.grid:not(.strip):not(.index)::after { content: ""; flex-grow: 999; } /* keeps a short last row from stretching */
+.grid:not(.strip):not(.index) .frame { margin: 0; flex: var(--r) 1 calc(var(--r) * var(--row)); min-width: 0; }
+.grid:not(.strip):not(.index) .frame button { width: 100%; }
+.grid:not(.strip):not(.index) .ph { aspect-ratio: var(--r) !important; }
+@media (max-width: 760px) { .grid:not(.strip):not(.index) { gap: var(--s1); --row: 170px; } }
+/* Category tabs: one photo at a time, scrolled sideways */
+.grid.strip {
+  columns: auto; display: flex; gap: var(--s3); align-items: center;
+  /* Desktop: moved only by the arrow buttons, so a stray wheel or trackpad scroll can't shift it */
+  position: relative; overflow-x: hidden; touch-action: pan-y; scroll-behavior: smooth;
+  scrollbar-width: none; padding-block: var(--s1);
+}
+.grid.strip::-webkit-scrollbar { display: none; }
+/* Touch screens: swipe between photos too (desktop stays arrows-only) */
+@media (hover: none) and (pointer: coarse) {
+  .grid.strip { overflow-x: auto; touch-action: pan-x pan-y; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch; }
+}
+.grid.strip:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.strip .frame { flex: none; margin: 0; height: min(74vh, 780px); scroll-snap-align: center; }
+/* Centered; neighbours on both sides come from the looping copies */
+.strip .frame button { height: 100%; }
+.strip .ph { height: 100%; width: auto; max-width: none; }
+.strip .ph.tall { aspect-ratio: 4 / 5; }
+.strip .frame:not(.current) { opacity: .45; transition: opacity .4s ease; }
+.strip .frame.current { opacity: 1; transition: opacity .4s ease; }
+.strip-ctrl { display: flex; justify-content: center; align-items: center; gap: var(--s3); padding-top: var(--s2); font: 500 .85rem var(--body); color: var(--muted); font-variant-numeric: tabular-nums; }
+.strip-ctrl button { font: 500 1rem var(--body); color: var(--ink); background: transparent; border: 1px solid var(--rule); border-radius: 999px; width: 2.6rem; height: 2.6rem; cursor: pointer; transition: border-color .25s ease, opacity .25s ease; }
+.strip-ctrl button:hover { border-color: var(--ink); }
+.strip-ctrl button:disabled { opacity: .35; cursor: default; }
+@media (max-width: 760px) {
+  .strip .frame { height: auto; width: 84vw; }
+  .strip .frame button { width: 100%; height: auto; }
+  .strip .ph { width: 100%; height: auto; }
+  .grid.strip { gap: var(--s1); }
+}
+.empty { margin: 0; padding: var(--s4) var(--s2); color: var(--muted); text-align: center; column-span: all; }
+.empty code { font: 600 1em var(--body); color: var(--ink); }
+.frame { margin: 0 0 var(--s2); break-inside: avoid; display: block; }
+.frame button { all: unset; cursor: zoom-in; display: block; }
+.frame button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.ph { aspect-ratio: 3 / 2; max-width: 100%; width: 100%; position: relative; overflow: hidden; }
+.ph.tall { aspect-ratio: 4 / 5; }
+.ph img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s ease; }
+.frame button:hover .ph img { transform: scale(1.025); }
+.ph .sample { position: absolute; left: .5rem; top: .5rem; font: 600 .62rem/1.2 var(--body); letter-spacing: .1em; text-transform: uppercase; background: rgba(0,0,0,.45); color: #fff; padding: 2px 6px; border-radius: 2px; }
+
+/* About + contact */
+/* ---- Pages: Home / Work / About / Contact are separate views ---- */
+[data-view][hidden] { display: none !important; }
+/* Tab title swap */
+.hero-cat.swap { opacity: 0 !important; transform: translateY(10px) !important; transition: opacity .2s ease, transform .2s ease !important; }
+/* Page change: new page fades and rises in */
+.page-in { animation: pageIn .45s var(--ease, ease) both; }
+@keyframes pageIn { from { opacity: 0; transform: translateY(10px); } }
+.home-view { min-height: calc(100vh - var(--hh, 52px)); min-height: calc(100svh - var(--hh, 52px));
+  display: grid; grid-template-rows: 1fr auto; justify-items: center; align-items: center; gap: var(--s3); padding-block: var(--s4) var(--s3); }
+.home-photo { all: unset; cursor: zoom-in; display: block; max-width: min(100%, 980px); overflow: hidden; position: relative;
+  box-shadow: 0 18px 50px rgba(0,0,0,.45); transition: box-shadow .5s ease, transform .5s var(--ease, ease); animation: homeIn 1s var(--ease, ease) both; }
+.home-photo:hover { box-shadow: 0 26px 64px rgba(0,0,0,.6); transform: translateY(-3px); }
+.home-photo:hover img { transform: scale(1.04); }
+.home-photo:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+/* Home slideshow: a fixed 3:2 frame; slides cross-fade */
+.home-show { display: grid; gap: var(--s2); justify-items: center; width: 100%; }
+.home-photo { width: min(100%, 980px, calc(min(66vh, 720px) * 1.5)); aspect-ratio: 3 / 2; max-width: 100%; }
+.slides { position: absolute; inset: 0; display: block; }
+.slides img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;
+  opacity: 0; transition: opacity 1s ease, transform .8s var(--ease, ease); }
+.slides img.on { opacity: 1; }
+.home-photo:hover .slides img { transform: scale(1.04); }
+.show-ctrl { display: flex; align-items: center; gap: var(--s2); min-height: 24px; }
+.dots { display: flex; gap: .5rem; }
+.dots button { all: unset; cursor: pointer; width: 24px; height: 24px; display: grid; place-items: center; }
+.dots button::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--muted); opacity: .45; transition: opacity .3s ease, transform .3s ease, background-color .3s ease; }
+.dots button[aria-current="true"]::before { background: var(--accent); opacity: 1; transform: scale(1.25); }
+.dots button:hover::before { opacity: .9; }
+.dots button:focus-visible, .show-pause:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+.show-pause { all: unset; cursor: pointer; width: 24px; height: 24px; display: grid; place-items: center; color: var(--muted); transition: color .25s ease; }
+.show-pause:hover { color: var(--ink); }
+.show-pause svg { width: 14px; height: 14px; pointer-events: none; }
+@keyframes homeIn { from { opacity: 0; transform: translateY(12px) scale(.985); } }
+.home-social { display: flex; gap: var(--s2); align-items: center; }
+.home-ig { color: var(--ink); display: inline-flex; padding: .4rem; border-radius: 10px; transition: color .25s ease, transform .25s ease; }
+.home-ig:hover { color: var(--accent); transform: translateY(-2px); }
+.home-ig:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.split.page { border-top: 0; min-height: calc(100vh - var(--hh, 52px) - 5rem); align-content: center; }
+body.on-home footer { display: none !important; }
+nav a[aria-current="page"] { color: var(--ink); }
+.brand { font-size: clamp(1.15rem, 2.2vw, 1.5rem); }
+.split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s5); padding-block: var(--s4) var(--s5); border-top: 1px solid var(--ink); }
+/* ---- Accessibility ---- */
+.sr-only { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.skip { position: fixed; left: max(16px, env(safe-area-inset-left, 0px)); top: calc(env(safe-area-inset-top, 0px) + 8px); z-index: 30;
+  background: var(--accent); color: var(--accent-ink); font: 600 .9rem var(--body); padding: .6rem 1rem; border-radius: 6px; text-decoration: none;
+  transform: translateY(-160%); transition: transform .2s ease; }
+.skip:focus { transform: none; outline: 2px solid var(--ink); outline-offset: 2px; }
+main:focus, #page-h1:focus, .split h2:focus { outline: none; }
+.split h2 { font: 800 clamp(1.8rem, 4vw, 2.6rem)/1 var(--display); letter-spacing: -.02em; margin: 0 0 var(--s2); text-wrap: balance; }
+.split p { margin: 0 0 var(--s2); max-width: 60ch; }
+.eyebrow { font: 600 .7rem/1.2 var(--body); text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin: 0 0 var(--s1); }
+#about h2 { font-size: clamp(1.7rem, 3.4vw, 2.4rem); line-height: 1.05; max-width: 18ch; }
+#about .about-lede { font: 500 clamp(1.2rem, 2.2vw, 1.5rem)/1.4 var(--body); max-width: 32ch; margin: 0; }
+#about .about-body { margin-top: var(--s3); display: grid; gap: var(--s2); max-width: 58ch; }
+#about .about-body p { margin: 0; color: var(--muted); line-height: 1.7; }
+#about .about-cta { margin: var(--s3) 0 0; font-weight: 500; }
+#about .faq { margin-top: var(--s4); max-width: 58ch; border-bottom: 1px solid var(--rule); }
+#about .faq h3 { font: 600 .75rem/1 var(--body); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin: 0 0 var(--s2); }
+#about .faq details { border-top: 1px solid var(--rule); }
+#about .faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: var(--s2); padding: .95rem 0; font-weight: 500; color: var(--ink); transition: color .2s ease; }
+#about .faq summary::-webkit-details-marker { display: none; }
+#about .faq summary::after { content: "+"; font: 400 1.35rem/1 var(--body); color: var(--accent); transition: transform .25s ease; flex: none; }
+#about .faq details[open] summary::after { transform: rotate(45deg); }
+#about .faq summary:hover { color: var(--accent); }
+#about .faq summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+#about .faq details > p, #about .faq details > ol { margin: 0 0 1.1rem; color: var(--muted); line-height: 1.7; }
+#about .faq ol { padding-left: 1.2rem; display: grid; gap: .35rem; }
+#about .faq a { color: var(--accent); text-underline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { #about .faq summary::after { transition: none; } }
+.about-cta a { color: var(--accent); text-underline-offset: 3px; }
+.email-inline { user-select: all; overflow-wrap: anywhere; }
+dl.specs dd { min-width: 0; }
+.portrait { margin: 0; position: relative; justify-self: end; width: 100%; max-width: 440px; aspect-ratio: 4 / 5; overflow: hidden; }
+.portrait img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.portrait .sample { position: absolute; left: .5rem; top: .5rem; font: 600 .62rem/1.2 var(--body); letter-spacing: .1em; text-transform: uppercase; background: rgba(0,0,0,.45); color: #fff; padding: 2px 6px; border-radius: 2px; }
+#about { align-items: start; align-content: start; }
+#about .portrait { margin-top: .4rem; }
+dl.specs { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: .35rem var(--s3); margin: var(--s3) 0 0; font-size: .92rem; }
+dl.specs dt { font: 600 .7rem/1.2 var(--body); text-transform: uppercase; letter-spacing: .1em; color: var(--muted); padding-top: .3rem; }
+dl.specs dd { margin: 0; }
+form { display: grid; gap: var(--s2); }
+label { display: grid; gap: .35rem; font: 600 .7rem/1.2 var(--body); text-transform: uppercase; letter-spacing: .1em; color: var(--muted); }
+input, select, textarea {
+  font: 400 1rem var(--body); color: var(--ink); background: var(--sheet);
+  border: 1px solid var(--rule); border-radius: 4px; padding: .65rem .75rem; width: 100%;
+}
+textarea { min-height: 7rem; resize: vertical; }
+.row2 { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: var(--s2); }
+.btn:disabled { opacity: .6; cursor: progress; }
+.btn { justify-self: start; font: 600 .95rem var(--body); background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 4px; padding: .7rem 1.3rem; cursor: pointer; }
+.note { font-size: .88rem; color: var(--muted); margin: 0; }
+.email { display: flex; gap: .5rem; align-items: center; flex-wrap: wrap; font: 500 1rem var(--body); }
+.email button { font: 500 .8rem var(--body); background: transparent; color: var(--ink); border: 1px solid var(--rule); border-radius: 4px; padding: .25rem .6rem; cursor: pointer; }
+.status { font-size: .9rem; color: var(--accent); min-height: 1.4em; margin: 0; }
+
+/* Future sections */
+.future { border-top: 1px solid var(--ink); padding-block: var(--s4) var(--s5); }
+.future h2 { font: 800 2rem/1 var(--display); margin: 0 0 var(--s1); }
+
+.mini-email { user-select: all; overflow-wrap: anywhere; min-width: 0; }
+footer { border-top: 1px solid var(--rule); padding-block: var(--s3); font: 400 .85rem var(--body); color: var(--muted); display: flex; justify-content: space-between; gap: var(--s2); flex-wrap: wrap; }
+
+/* Lightbox */
+.lb { position: fixed; inset: 0; z-index: 20; background: rgba(8,11,18,.96); display: grid; grid-template-rows: minmax(0,1fr) auto; padding: calc(env(safe-area-inset-top,0px) + 3rem) max(16px, env(safe-area-inset-right,0px)) calc(env(safe-area-inset-bottom,0px) + 1rem) max(16px, env(safe-area-inset-left,0px)); color: var(--light); }
+.lb img { max-width: 100%; max-height: 100%; object-fit: contain; margin: auto; display: block; min-height: 0; }
+.lb .meta { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; padding-top: 1rem; font: 400 .85rem var(--body); font-variant-numeric: tabular-nums; }
+.lb .meta strong { font: 600 1rem var(--body); display: block; }
+.lb .count { color: var(--accent); margin-right: .9rem; font-variant-numeric: tabular-nums; }
+.socials { list-style: none; margin: var(--s3) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem; }
+.socials a { display: inline-flex; align-items: center; gap: .45rem; text-decoration: none; font: 500 .9rem var(--body); border: 1px solid var(--rule); border-radius: 999px; padding: .4rem .95rem; transition: border-color .25s ease, background-color .25s ease; }
+.socials a:hover { border-color: var(--ink); background: var(--sheet); }
+.socials a small { font: 400 .85rem var(--body); color: var(--muted); }
+.socials-foot { margin: 0; gap: .6rem; }
+.socials-foot a { border: 0; padding: 0; font: 400 .85rem var(--body); color: var(--muted); }
+.socials-foot a:hover { background: none; color: var(--ink); }
+.socials-foot a.social-icon { display: inline-flex; padding: .2rem; border-radius: 8px; color: var(--ink); transition: color .25s ease, transform .25s ease; }
+.socials-foot a.social-icon:hover { color: var(--accent); transform: translateY(-2px); }
+footer { align-items: center; }
+.lb .ctrl { position: absolute; top: calc(env(safe-area-inset-top,0px) + .75rem); right: max(16px, env(safe-area-inset-right,0px)); display: flex; gap: .5rem; }
+.lb .ctrl button { font: 500 .85rem var(--body); background: transparent; color: var(--light); border: 1px solid #3A4458; border-radius: 4px; padding: .35rem .7rem; cursor: pointer; }
+
+@media (max-width: 760px) {
+  .hero, .split { grid-template-columns: minmax(0, 1fr); gap: var(--s3); }
+  .portrait { justify-self: stretch; max-width: 100%; }
+  /* About on phones: photo sits right under the heading, so opening FAQ answers doesn't push it around */
+  #about { gap: 0; }
+  #about > div { display: contents; }
+  #about > div > * { order: 2; }
+  #about > div > h2 { order: 0; }
+  #about .portrait { order: 1; margin: var(--s1) 0 var(--s3); max-width: 480px; justify-self: start; }
+  .hero { padding-block: var(--s4) var(--s3); }
+  .row2 { grid-template-columns: minmax(0,1fr); }
+  .grid { columns: 1; }
+  nav ul { gap: var(--s2); }
+  .top .wrap { flex-wrap: nowrap; }
+  .brand { font-size: 1.05rem; white-space: nowrap; }
+  nav a { white-space: nowrap; }
+  .brand small { display: none; }
+  .filters { overflow-x: auto; flex-wrap: nowrap; scrollbar-width: none; max-width: 100%; }
+  .filters::-webkit-scrollbar { display: none; }
+  .filters button { flex: none; padding: .5rem 1rem; }
+  .sheet { padding: var(--s1); margin-inline: calc(-1 * var(--s1)); }
+  .lb { grid-template-rows: auto minmax(0,1fr) auto; padding-top: calc(env(safe-area-inset-top,0px) + 1rem); }
+  .lb .ctrl { position: static; justify-content: flex-end; margin-bottom: .75rem; }
+  .lb .ctrl #lb-prev, .lb .ctrl #lb-next { display: none; }
+  .lb .hint { display: block; }
+  .btn { justify-self: stretch; padding-block: .85rem; }
+  input, select, textarea { font-size: 16px; }
+}
+.lb .hint { display: none; font: 400 .85rem var(--body); color: var(--muted); }
+.lb img { touch-action: pan-y; }
+/* ---- Motion ---- */
+:root { --ease: cubic-bezier(.22, .61, .36, 1); }
+html { scroll-behavior: smooth; }
+section[id], #contact { scroll-margin-top: 4.5rem; }
+header.top { transition: box-shadow .3s var(--ease); }
+header.top.scrolled { box-shadow: 0 1px 18px rgba(0,0,0,.4); }
+/* Header shows only near the top of the page */
+header.top { transition: box-shadow .3s var(--ease), transform .35s var(--ease); }
+header.top.away { transform: translateY(calc(-100% - env(safe-area-inset-top, 0px))); box-shadow: none; }
+nav a, .filters button, .btn, .email button, .lb .ctrl button {
+  transition: color .25s var(--ease), background-color .25s var(--ease), border-color .25s var(--ease), transform .15s var(--ease);
+}
+.filters button:active, .btn:active, .email button:active, .lb .ctrl button:active, .frame button:active .ph { transform: scale(.97); }
+.btn:hover { filter: brightness(1.08); }
+.ph { transition: transform .2s var(--ease); }
+.ph img { transition: transform .7s var(--ease), filter .7s var(--ease); }
+.frame button:hover .ph img { transform: scale(1.035); }
+
+/* Scroll reveal: only elements below the first screen get hidden, so the page is complete at load */
+.reveal { opacity: 0; transform: translateY(28px); }
+.reveal.in { opacity: 1; transform: none; transition: opacity .8s var(--ease), transform .8s var(--ease); transition-delay: var(--d, 0s); }
+.grid { transition: opacity .2s var(--ease); }
+.grid.fading { opacity: 0; }
+.hero .h1, .hero > div { animation: rise .9s var(--ease) backwards; }
+.hero > div { animation-delay: .12s; }
+@keyframes rise { from { opacity: 0; transform: translateY(18px); } }
+
+/* Lightbox open/close */
+.lb { animation: lbIn .3s var(--ease); }
+.lb img { animation: imgIn .4s var(--ease); }
+.lb.closing { animation: lbOut .22s var(--ease) forwards; }
+@keyframes lbIn { from { opacity: 0; } }
+@keyframes lbOut { to { opacity: 0; } }
+@keyframes imgIn { from { opacity: 0; transform: scale(.97); } }
+
+@media (max-width: 360px) { nav ul { gap: .6rem; flex-wrap: nowrap; } nav a { font-size: .82rem; } .brand { font-size: .95rem; } }
+@media (prefers-reduced-motion: reduce) {
+  .home-photo, .page-in { animation: none; }
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+  .reveal { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+
+
+<a class="skip" href="#main-content">Skip to content</a>
+<header class="top" id="top">
+  <div class="wrap">
+    <a class="brand" href="#home">Justin Khyle <small>Photography</small></a>
+    <nav aria-label="Main"><ul id="nav"></ul></nav>
+  </div>
+</header>
+
+<main class="wrap" id="main-content" tabindex="-1">
+  <h1 class="sr-only" id="page-h1" tabindex="-1">Justin Khyle Photography</h1>
+  <!-- Home page: name (in the header), one photo, Instagram -->
+  <section class="home-view" id="home" data-view="home" aria-label="Home">
+    <div class="home-show" aria-roledescription="slideshow" aria-label="Featured photos">
+      <button type="button" class="home-photo" id="home-photo-btn" aria-label="View photo full screen">
+        <span class="slides" id="home-slides"></span>
+      </button>
+      <div class="show-ctrl">
+        <div class="dots" id="home-dots" role="group" aria-label="Choose photo"></div>
+        <button type="button" class="show-pause" id="home-pause" aria-label="Pause slideshow"></button>
+      </div>
+    </div>
+    <div class="home-social">
+    <a class="home-ig" id="home-ig" href="https://www.instagram.com/___justinkhyle/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg></a>
+      <a class="home-ig" href="https://www.youtube.com/@__JustinKhyle" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="5" width="19" height="14" rx="4.5"/><path d="M10 9.2v5.6l4.8-2.8z" fill="currentColor" stroke="none"/></svg></a>
+    </div>
+  </section>
+
+  <section class="hero" data-view="work" aria-labelledby="hero-title">
+    <img class="hero-bg" id="hero-bg" alt="" aria-hidden="true">
+    <img class="hero-bg off" id="hero-bg2" alt="" aria-hidden="true">
+    <span class="sample" id="hero-sample" hidden>Sample</span>
+    <p class="hero-cat" id="hero-cat" aria-live="polite"><strong id="hero-cat-name"></strong><span id="hero-cat-count"></span></p>
+    <p class="h1" id="hero-title">Fog, light, and the people <em>in between.</em></p>
+    <div>
+      <p>A collection of places I've been and people I've met.</p>
+      <p class="kit">Fujifilm X-T5 · Sony ZV-E1</p>
+    </div>
+  </section>
+
+  <section id="work" data-view="work" aria-labelledby="work-title">
+    <div class="bar">
+      <h2 id="work-title">Selected work</h2>
+      <div class="filters" id="filters" role="group" aria-label="Filter by category"></div>
+    </div>
+    <div class="sheet">
+      <div class="index-top" id="index-top">
+        <p class="index-label">Selected work</p>
+        <div class="collage-panel"><div class="collage" id="collage"></div></div>
+        <p class="index-label">Collections</p>
+      </div>
+      <div class="grid" id="grid"></div>
+      <div class="strip-ctrl" id="strip-ctrl" hidden>
+        <button type="button" id="s-prev" aria-label="Previous photo">←</button>
+        <span id="s-count" aria-live="polite"></span>
+        <button type="button" id="s-next" aria-label="Next photo">→</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="split page" id="about" data-view="about" aria-labelledby="about-title">
+    <div>
+      <h2 id="about-title" tabindex="-1">About</h2>
+      <p class="about-lede">Justin Khyle is a Filipino landscape and portrait photographer based in San Francisco.</p>
+      <div class="about-body">
+        <p>My interest in cameras began with my mom, who loved capturing life even before I was born, so it’s always been a constant in my life. My first love was actually videography. Like every kid in my generation, I made little vlogs on my phone, hoping to become some big YouTuber. Then came photography, a slow burn I never expected to fall in love with. Around 2022, I finally asked myself, why not actually try to get better?</p>
+        <p>Since then, taking photos has become more than a hobby. It’s my escape. When I’m behind the camera, everything else fades away and I’m fully in the moment. Now I also get to capture special moments for other people and give them something they can cherish.</p>
+        <p>My sessions are relaxed and easygoing, so you can just be yourself. You’ll have your photos within a week of the shoot.</p>
+      </div>
+      <p class="about-cta">Graduating, celebrating something, or just want photos you'll actually like? <a href="#contact">Send me a message</a> or email <span class="email-inline">justinkhyle@gmail.com</span>.</p>
+      <div class="faq" aria-labelledby="faq-title">
+        <h3 id="faq-title">FAQ</h3>
+        <details>
+          <summary>What types of sessions do you offer?</summary>
+          <p>Portraits are my main focus. That includes graduation photos, individual portraits, and small groups like couples, friends and family. If you have something else in mind, just ask.</p>
+        </details>
+        <details>
+          <summary>How do I book, and what happens after that?</summary>
+          <ol>
+            <li>Send me a message through the <a href="#contact">contact form</a> or by email with what you have in mind and a few dates that work for you.</li>
+            <li>I'll get back to you so we can plan the location, time and the kind of photos you want.</li>
+            <li>We shoot at a relaxed pace, with no rushing.</li>
+            <li>You get your edited photos within a week.</li>
+          </ol>
+        </details>
+        <details>
+          <summary>I feel awkward in front of the camera. Will you help?</summary>
+          <p>Yes, and you're not alone. Most people feel a little stiff at first. I'll guide you with simple poses and direction throughout the shoot, and keep things easygoing so you can relax and just be yourself.</p>
+        </details>
+      </div>
+    </div>
+    <figure class="portrait">
+      <img id="portrait-img" alt="Portrait of Justin Khyle">
+      <span class="sample" id="portrait-sample" hidden>Sample</span>
+    </figure>
+  </section>
+
+  <section class="split page" id="contact" data-view="contact" aria-labelledby="contact-title">
+    <div>
+      <h2 id="contact-title" tabindex="-1">Contact</h2>
+      <p>For prints, collaborations, or portrait sessions, send a note through the form or email me directly.</p>
+      <div class="email"><span id="email-text">justinkhyle@gmail.com</span><button type="button" id="copy-email">Copy</button></div>
+      <ul class="socials" id="socials" aria-label="Social links"></ul>
+    </div>
+    <div>
+      <form id="contact-form" novalidate>
+        <div class="row2">
+          <label for="c-name">Name<input id="c-name" name="name" autocomplete="name" required></label>
+          <label for="c-email">Email<input id="c-email" name="email" type="email" autocomplete="email" required></label>
+        </div>
+        <label for="c-type">What it's about
+          <select id="c-type" name="type">
+            <option>Portrait session</option>
+            <option>Event coverage</option>
+            <option>Print inquiry</option>
+            <option>Other</option>
+          </select>
+        </label>
+        <label for="c-msg">Message<textarea id="c-msg" name="message" required></textarea></label>
+        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+        <button class="btn" type="submit" id="send">Send message</button>
+        <p class="status" id="status" role="status"></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- Future sections: rendered only when SITE.features enables them -->
+  <section class="future" id="book" hidden aria-labelledby="book-title">
+    <h2 id="book-title">Book a session</h2>
+    <p class="note">Booking calendar and deposits go here.</p>
+  </section>
+  <section class="future" id="shop" hidden aria-labelledby="shop-title">
+    <h2 id="shop-title">Prints</h2>
+    <p class="note">Print store goes here.</p>
+  </section>
+
+  <footer class="mini" id="foot-mini" hidden>
+    <span class="mini-email" id="mini-email">justinkhyle@gmail.com</span>
+    <ul class="socials socials-foot" id="socials-mini" aria-label="Social links"></ul>
+  </footer>
+  <footer id="foot-main">
+    <span>© <span id="yr"></span> Justin Khyle</span>
+    <ul class="socials socials-foot" id="socials-foot" aria-label="Social links"></ul>
+  </footer>
+</main>
+
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Photo viewer">
+  <div class="ctrl">
+    <button type="button" id="lb-prev" aria-label="Previous photo">← Prev</button>
+    <button type="button" id="lb-next" aria-label="Next photo">Next →</button>
+    <button type="button" id="lb-close" aria-label="Close viewer">Close</button>
+  </div>
+  <img id="lb-img" alt="">
+  <div class="meta"><div><strong id="lb-title"></strong><span id="lb-place"></span></div><span><span id="lb-count" class="count"></span><span id="lb-exif"></span></span><span class="hint">Swipe for next photo</span></div>
+</div>
+
+<script>
+/* ==========================================================
+   SITE CONFIG — the only part you normally edit.
+   features: flip booking/shop to true when those are built.
+   photos:   replace `src` with your own image paths, e.g. "photos/ocean-beach.jpg".
+   ========================================================== */
+const SITE = {
+  email: "justinkhyle@gmail.com",
+  // Top photo for each tab, e.g. Street: "photos/mission-rain.jpg". Leave "" to use a sample.
+  // Title and location shown when someone opens a tab's top photo
+  heroInfo: {
+    Home: { title: "Canyon road", place: "Lake Tahoe, California" },
+    Street: { title: "Kearny crosswalk", place: "Market Street, San Francisco" },
+    Landscape: { title: "Golden Gate from Fort Point", place: "Fort Point, San Francisco" },
+    Portrait: { title: "Window light", place: "San Francisco" }
+  },
+  heroes: { Home: "photos/hero-home.jpg", Street: "photos/hero-street.jpg", Landscape: "photos/hero-landscape.jpg", Portrait: "photos/hero-portrait.jpg" },
+  // Photo of you for the About section, e.g. "photos/me.jpg". Leave "" to use a sample.
+  portrait: "",
+  // Social links: replace handles/URLs with yours. Remove any you don't use.
+  socials: [
+    { label: "Instagram", handle: "@___justinkhyle", url: "https://www.instagram.com/___justinkhyle/" },
+    { label: "YouTube", handle: "@__JustinKhyle", url: "https://www.youtube.com/@__JustinKhyle" }
+  ],
+  // Formspree form ID: the part after /f/ in your form's endpoint, e.g. "xvgzabcd"
+  formspreeId: "meaajvno",
+  features: { booking: false, shop: false },
+  categories: ["Street", "Landscape", "Portrait"],
+  // Home page slideshow, in order. "hero" = the canyon road photo. Swap in any photo's src to change it.
+  homeSlides: ["hero", "photos/landscape-58", "photos/landscape-26", "photos/street-30", "photos/landscape-34"],
+  // Photos in the collage at the top of the Work page, in this order (they also stay in their tabs)
+  selected: ["photos/landscape-54", "photos/portrait-17", "photos/street-29", "photos/portrait-20", "photos/street-37", "photos/home-01", "photos/landscape-51"],
+  photos: [
+    { title: "Window light, side table", place: "San Francisco", cat: "Other", src: "photos/home-01", w: 2667, h: 4000, exif: "" },
+    { title: "New Ming Kee, Grant Ave", place: "Chinatown, San Francisco", cat: "Street", src: "photos/street-01", w: 2667, h: 4000, exif: "" },
+    { title: "Flying books", place: "North Beach, San Francisco", cat: "Street", src: "photos/street-02", w: 2667, h: 4000, exif: "" },
+    { title: "Grant Avenue crowd", place: "Chinatown, San Francisco", cat: "Street", src: "photos/street-03", w: 4000, h: 2667, exif: "" },
+    { title: "Chevelle interior", place: "Chinatown, San Francisco", cat: "Street", src: "photos/street-04", w: 4000, h: 2667, exif: "" },
+    { title: "Pastel coupe", place: "Chinatown, San Francisco", cat: "Street", src: "photos/street-05", w: 2667, h: 4000, exif: "" },
+    { title: "Chrome and red", place: "Chinatown, San Francisco", cat: "Street", src: "photos/street-06", w: 2667, h: 4000, exif: "" },
+    { title: "Under the hood", place: "Chinatown, San Francisco", cat: "Street", src: "photos/street-07", w: 4000, h: 2667, exif: "" },
+    { title: "Lanterns over Grant", place: "Chinatown, San Francisco", cat: "Street", src: "photos/street-08", w: 4000, h: 2667, exif: "" },
+    { title: "Kwong Sang Lung Co.", place: "Chinatown, San Francisco", cat: "Street", src: "photos/street-09", w: 2667, h: 4000, exif: "" },
+    { title: "Hood up", place: "Chinatown, San Francisco", cat: "Street", src: "photos/street-10", w: 4000, h: 2667, exif: "" },
+    { title: "Red coupe, driver's side", place: "Chinatown, San Francisco", cat: "Street", src: "photos/street-11", w: 4000, h: 2667, exif: "" },
+    { title: "Sticker window", place: "Chinatown, San Francisco", cat: "Street", src: "photos/street-12", w: 2667, h: 4000, exif: "" },
+    { title: "Gold and black", place: "Chinatown, San Francisco", cat: "Street", src: "photos/street-13", w: 2667, h: 4000, exif: "" },
+    { title: "Handstand, Pier 39", place: "Fisherman's Wharf, San Francisco", cat: "Street", src: "photos/street-14", w: 4000, h: 2667, exif: "" },
+    { title: "Rally at the Ferry Building", place: "Embarcadero, San Francisco", cat: "Street", src: "photos/street-15", w: 4000, h: 2667, exif: "" },
+    { title: "Crosswalk, flags behind", place: "Embarcadero, San Francisco", cat: "Street", src: "photos/street-16", w: 4000, h: 2667, exif: "" },
+    { title: "Flag at the plaza", place: "Embarcadero, San Francisco", cat: "Street", src: "photos/street-17", w: 4000, h: 2667, exif: "" },
+    { title: "Market and Post", place: "Financial District, San Francisco", cat: "Street", src: "photos/street-18", w: 4000, h: 2667, exif: "" },
+    { title: "Grant at Market", place: "Union Square, San Francisco", cat: "Street", src: "photos/street-19", w: 4000, h: 2667, exif: "" },
+    { title: "Heart in Union Square", place: "Union Square, San Francisco", cat: "Street", src: "photos/street-20", w: 4000, h: 2667, exif: "" },
+    { title: "Waiting on Powell", place: "Union Square, San Francisco", cat: "Street", src: "photos/street-21", w: 4000, h: 2667, exif: "" },
+    { title: "Tulip Day from above", place: "Union Square, San Francisco", cat: "Street", src: "photos/street-22", w: 4000, h: 2667, exif: "" },
+    { title: "Red shirt on Market", place: "Market Street, San Francisco", cat: "Street", src: "photos/street-23", w: 4000, h: 2667, exif: "" },
+    { title: "Boarding the 14R", place: "Market Street, San Francisco", cat: "Street", src: "photos/street-24", w: 4000, h: 2667, exif: "" },
+    { title: "Waiting under yellow", place: "Market Street, San Francisco", cat: "Street", src: "photos/street-25", w: 4000, h: 2667, exif: "" },
+    { title: "Bike lane, late light", place: "Market Street, San Francisco", cat: "Street", src: "photos/street-27", w: 2667, h: 4000, exif: "" },
+    { title: "Bikes at Embarcadero Station", place: "Embarcadero, San Francisco", cat: "Street", src: "photos/street-28", w: 4000, h: 2667, exif: "" },
+    { title: "California Street cable car", place: "Financial District, San Francisco", cat: "Street", src: "photos/street-29", w: 4000, h: 2667, exif: "" },
+    { title: "Daly City BART platform", place: "Daly City", cat: "Street", src: "photos/street-30", w: 4000, h: 2667, exif: "" },
+    { title: "Fleet Week on the beach", place: "Crissy Field, San Francisco", cat: "Street", src: "photos/street-31", w: 4000, h: 2667, exif: "" },
+    { title: "Sandbar catch", place: "Crissy Field, San Francisco", cat: "Street", src: "photos/street-32", w: 4000, h: 2667, exif: "" },
+    { title: "Blue Angels over the lawn", place: "Marina Green, San Francisco", cat: "Street", src: "photos/street-33", w: 4000, h: 2667, exif: "" },
+    { title: "Diamond pass", place: "Marina Green, San Francisco", cat: "Street", src: "photos/street-34", w: 4000, h: 2667, exif: "" },
+    { title: "Four in a row over the marina", place: "Marina Green, San Francisco", cat: "Street", src: "photos/street-35", w: 4000, h: 2521, exif: "" },
+    { title: "Bomb burst", place: "Marina Green, San Francisco", cat: "Street", src: "photos/street-36", w: 2955, h: 4000, exif: "" },
+    { title: "Split over the harbor", place: "Marina Green, San Francisco", cat: "Street", src: "photos/street-37", w: 4000, h: 2667, exif: "" },
+    { title: "Delta formation, late light", place: "Marina Green, San Francisco", cat: "Street", src: "photos/street-38", w: 4000, h: 2667, exif: "" },
+    { title: "Montgomery Station entrance", place: "Financial District, San Francisco", cat: "Street", src: "photos/street-39", w: 2667, h: 4000, exif: "" },
+    { title: "Crossing at Market", place: "Financial District, San Francisco", cat: "Street", src: "photos/street-40", w: 4000, h: 2667, exif: "" },
+    { title: "Loading dock, after dark", place: "Market Street, San Francisco", cat: "Street", src: "photos/street-41", w: 4000, h: 2667, exif: "" },
+    { title: "Golden hour path", place: "Bay Area", cat: "Landscape", src: "photos/landscape-01", w: 2667, h: 4000, exif: "" },
+    { title: "Empty lot, last light", place: "Bay Area", cat: "Landscape", src: "photos/landscape-02", w: 4000, h: 2667, exif: "" },
+    { title: "Transamerica from above", place: "Financial District, San Francisco", cat: "Landscape", src: "photos/landscape-03", w: 2667, h: 4000, exif: "" },
+    { title: "Columbus Tower", place: "North Beach, San Francisco", cat: "Landscape", src: "photos/landscape-04", w: 2667, h: 4000, exif: "" },
+    { title: "Bridge over Crissy Field", place: "Presidio, San Francisco", cat: "Landscape", src: "photos/landscape-05", w: 4000, h: 2667, exif: "" },
+    { title: "Tunnel Tops, golden hour", place: "Presidio, San Francisco", cat: "Landscape", src: "photos/landscape-06", w: 2667, h: 4000, exif: "" },
+    { title: "Tower through the trees", place: "Presidio, San Francisco", cat: "Landscape", src: "photos/landscape-07", w: 2667, h: 4000, exif: "" },
+    { title: "Bridge in the haze", place: "Presidio, San Francisco", cat: "Landscape", src: "photos/landscape-08", w: 4000, h: 2667, exif: "" },
+    { title: "Pier 7", place: "Embarcadero, San Francisco", cat: "Landscape", src: "photos/landscape-09", w: 2667, h: 4000, exif: "" },
+    { title: "Embarcadero bike lane", place: "Embarcadero, San Francisco", cat: "Landscape", src: "photos/landscape-10", w: 2667, h: 4000, exif: "" },
+    { title: "Sea lions, Pier 39", place: "Fisherman's Wharf, San Francisco", cat: "Landscape", src: "photos/landscape-11", w: 2667, h: 4000, exif: "" },
+    { title: "Empty docks", place: "Fisherman's Wharf, San Francisco", cat: "Landscape", src: "photos/landscape-12", w: 2667, h: 4000, exif: "" },
+    { title: "Ferry landing", place: "Fisherman's Wharf, San Francisco", cat: "Landscape", src: "photos/landscape-13", w: 2667, h: 4000, exif: "" },
+    { title: "Under the south tower", place: "Fort Point, San Francisco", cat: "Landscape", src: "photos/landscape-14", w: 2667, h: 4000, exif: "" },
+    { title: "Sailboat under the span", place: "Fort Point, San Francisco", cat: "Landscape", src: "photos/landscape-15", w: 2667, h: 4000, exif: "" },
+    { title: "Picnics at Tunnel Tops", place: "Presidio, San Francisco", cat: "Landscape", src: "photos/landscape-16", w: 4000, h: 2667, exif: "" },
+    { title: "Angel Island from the water", place: "San Francisco Bay", cat: "Landscape", src: "photos/landscape-17", w: 4000, h: 2667, exif: "" },
+    { title: "Dragon boat practice", place: "Bay Area", cat: "Landscape", src: "photos/landscape-18", w: 4000, h: 2667, exif: "" },
+    { title: "Herons at the marina", place: "Bay Area", cat: "Landscape", src: "photos/landscape-19", w: 2667, h: 4000, exif: "" },
+    { title: "Ferry Building clock tower", place: "Embarcadero, San Francisco", cat: "Landscape", src: "photos/landscape-20", w: 2667, h: 4000, exif: "" },
+    { title: "Sun rays over the shoreline", place: "Pacifica", cat: "Landscape", src: "photos/landscape-21", w: 4000, h: 2667, exif: "" },
+    { title: "Birds at the waterline", place: "Pacifica", cat: "Landscape", src: "photos/landscape-22", w: 2667, h: 4000, exif: "" },
+    { title: "Pacifica Pier", place: "Pacifica", cat: "Landscape", src: "photos/landscape-23", w: 2667, h: 4000, exif: "" },
+    { title: "Pink clouds, dark sand", place: "Pacifica", cat: "Landscape", src: "photos/landscape-24", w: 2667, h: 4000, exif: "" },
+    { title: "Rowers through the reeds", place: "Lake Merced, San Francisco", cat: "Landscape", src: "photos/landscape-25", w: 4000, h: 2667, exif: "" },
+    { title: "Two at the shore", place: "Pacifica", cat: "Landscape", src: "photos/landscape-26", w: 4000, h: 2667, exif: "" },
+    { title: "Gulls by the pier", place: "Pacifica", cat: "Landscape", src: "photos/landscape-27", w: 4000, h: 2667, exif: "" },
+    { title: "Painted Ladies", place: "Alamo Square, San Francisco", cat: "Landscape", src: "photos/landscape-28", w: 2667, h: 4000, exif: "" },
+    { title: "Love tour van", place: "Alamo Square, San Francisco", cat: "Landscape", src: "photos/landscape-29", w: 2667, h: 4000, exif: "" },
+    { title: "Dutch Windmill", place: "Golden Gate Park, San Francisco", cat: "Landscape", src: "photos/landscape-30", w: 2667, h: 4000, exif: "" },
+    { title: "Ferry Building at dusk", place: "Embarcadero, San Francisco", cat: "Landscape", src: "photos/landscape-31", w: 2667, h: 4000, exif: "" },
+    { title: "Bay Bridge, blue hour", place: "San Francisco Bay", cat: "Landscape", src: "photos/landscape-32", w: 4000, h: 2667, exif: "" },
+    { title: "Ferries under the Bay Bridge", place: "San Francisco Bay", cat: "Landscape", src: "photos/landscape-33", w: 4000, h: 2667, exif: "" },
+    { title: "Ferry terminal lights", place: "Embarcadero, San Francisco", cat: "Landscape", src: "photos/landscape-34", w: 4000, h: 2667, exif: "" },
+    { title: "Sutro Baths ruins", place: "Lands End, San Francisco", cat: "Landscape", src: "photos/landscape-35", w: 4000, h: 2667, exif: "" },
+    { title: "Jet over the Golden Gate", place: "Crissy Field, San Francisco", cat: "Landscape", src: "photos/landscape-36", w: 4000, h: 2667, exif: "" },
+    { title: "Climbing past the trees", place: "San Francisco", cat: "Landscape", src: "photos/landscape-37", w: 4000, h: 2627, exif: "" },
+    { title: "SkyStar at night", place: "Fisherman's Wharf, San Francisco", cat: "Landscape", src: "photos/landscape-38", w: 2667, h: 4000, exif: "" },
+    { title: "SkyStar from Powell", place: "Fisherman's Wharf, San Francisco", cat: "Landscape", src: "photos/landscape-39", w: 2667, h: 4000, exif: "" },
+    { title: "Ghirardelli Square at night", place: "Fisherman's Wharf, San Francisco", cat: "Landscape", src: "photos/landscape-40b", w: 4000, h: 2667, exif: "" },
+    { title: "Boat in the channel", place: "Oyster Point, South San Francisco", cat: "Landscape", src: "photos/landscape-41", w: 4000, h: 2667, exif: "" },
+    { title: "Boat in the channel, vertical", place: "Oyster Point, South San Francisco", cat: "Landscape", src: "photos/landscape-42", w: 2667, h: 4000, exif: "" },
+    { title: "Plane over the point", place: "Oyster Point, South San Francisco", cat: "Landscape", src: "photos/landscape-43", w: 4000, h: 2667, exif: "" },
+    { title: "Moon over the moorings", place: "Oyster Point, South San Francisco", cat: "Landscape", src: "photos/landscape-44", w: 2667, h: 4000, exif: "" },
+    { title: "Glass and low tide", place: "Oyster Point, South San Francisco", cat: "Landscape", src: "photos/landscape-45", w: 4000, h: 2667, exif: "" },
+    { title: "Low tide reflections", place: "Oyster Point, South San Francisco", cat: "Landscape", src: "photos/landscape-46", w: 2667, h: 4000, exif: "" },
+    { title: "Path to the water", place: "Oyster Point, South San Francisco", cat: "Landscape", src: "photos/landscape-47", w: 2667, h: 4000, exif: "" },
+    { title: "Sailboat and glass", place: "Oyster Point, South San Francisco", cat: "Landscape", src: "photos/landscape-48", w: 2667, h: 4000, exif: "" },
+    { title: "Sunset on the Pacific", place: "Bay Area coast", cat: "Landscape", src: "photos/landscape-49", w: 4000, h: 2667, exif: "" },
+    { title: "Pink sky over the rooftops", place: "Bay Area", cat: "Landscape", src: "photos/landscape-50", w: 4000, h: 2667, exif: "" },
+    { title: "SkyStar reflection", place: "Fisherman's Wharf, San Francisco", cat: "Landscape", src: "photos/landscape-51", w: 2876, h: 4000, exif: "" },
+    { title: "Pink tide from the bluff", place: "Bay Area coast", cat: "Landscape", src: "photos/landscape-52", w: 4000, h: 2667, exif: "" },
+    { title: "Walking the dog at dusk", place: "Bay Area coast", cat: "Landscape", src: "photos/landscape-53", w: 4000, h: 2667, exif: "" },
+    { title: "Rocks below the Marin Headlands", place: "Lands End, San Francisco", cat: "Landscape", src: "photos/landscape-54", w: 4000, h: 2667, exif: "" },
+    { title: "Tanker through the Golden Gate", place: "Lands End, San Francisco", cat: "Landscape", src: "photos/landscape-55", w: 4000, h: 2667, exif: "" },
+    { title: "Golden Gate through the cypress", place: "Lands End, San Francisco", cat: "Landscape", src: "photos/landscape-56", w: 4000, h: 2667, exif: "" },
+    { title: "Pelicans over the strait", place: "Lands End, San Francisco", cat: "Landscape", src: "photos/landscape-57", w: 4000, h: 2667, exif: "" },
+    { title: "Emerald Bay and Fannette Island", place: "Lake Tahoe, California", cat: "Landscape", src: "photos/landscape-58", w: 4000, h: 2667, exif: "" },
+    { title: "Cabins in the canyon", place: "Lake Tahoe, California", cat: "Landscape", src: "photos/landscape-59", w: 2667, h: 4000, exif: "" },
+    { title: "Aspens along the fence", place: "Lake Tahoe, California", cat: "Landscape", src: "photos/landscape-60", w: 2576, h: 1717, exif: "" },
+    { title: "Yellow board to the water", place: "Pacifica", cat: "Landscape", src: "photos/landscape-61", w: 4000, h: 2439, exif: "" },
+    { title: "City Hall dome", place: "Civic Center, San Francisco", cat: "Landscape", src: "photos/landscape-62", w: 4000, h: 2667, exif: "" },
+    { title: "Golden Gate overlook", place: "San Francisco", cat: "Portrait", src: "photos/portrait-01", w: 2714, h: 4000, exif: "" },
+    { title: "Sandstone and sky", place: "San Francisco", cat: "Portrait", src: "photos/portrait-02", w: 2843, h: 4000, exif: "" },
+    { title: "Graduation at the bridge", place: "San Francisco", cat: "Portrait", src: "photos/portrait-03", w: 2910, h: 4000, exif: "" },
+    { title: "Cap and stoles", place: "San Francisco", cat: "Portrait", src: "photos/portrait-04", w: 2667, h: 4000, exif: "" },
+    { title: "Golden hour graduate", place: "San Francisco", cat: "Portrait", src: "photos/portrait-05", w: 2969, h: 4000, exif: "" },
+    { title: "Bay view graduation", place: "San Francisco", cat: "Portrait", src: "photos/portrait-06", w: 2605, h: 4000, exif: "" },
+    { title: "Civic Center, class of '26", place: "San Francisco", cat: "Portrait", src: "photos/portrait-08", w: 2870, h: 4000, exif: "" },
+    { title: "Among the daisies", place: "San Francisco", cat: "Portrait", src: "photos/portrait-09", w: 2696, h: 4000, exif: "" },
+    { title: "Cypress path", place: "San Francisco", cat: "Portrait", src: "photos/portrait-10", w: 2975, h: 4000, exif: "" },
+    { title: "Graduate at the colonnade", place: "Palace of Fine Arts, San Francisco", cat: "Portrait", src: "photos/portrait-11", w: 2667, h: 4000, exif: "" },
+    { title: "Looking out at the lagoon", place: "Palace of Fine Arts, San Francisco", cat: "Portrait", src: "photos/portrait-12", w: 2667, h: 4000, exif: "" },
+    { title: "White tulips", place: "Palace of Fine Arts, San Francisco", cat: "Portrait", src: "photos/portrait-13", w: 2667, h: 4000, exif: "" },
+    { title: "Golden hour glance", place: "San Francisco", cat: "Portrait", src: "photos/portrait-14", w: 2687, h: 4000, exif: "" },
+    { title: "Leaning on the rail", place: "San Francisco", cat: "Portrait", src: "photos/portrait-15", w: 2701, h: 4000, exif: "" },
+    { title: "City lights behind", place: "Embarcadero, San Francisco", cat: "Portrait", src: "photos/portrait-16", w: 2712, h: 4000, exif: "" },
+    { title: "Bay Bridge bokeh", place: "Embarcadero, San Francisco", cat: "Portrait", src: "photos/portrait-17", w: 2760, h: 4000, exif: "" },
+    { title: "Looking up at the lights", place: "Embarcadero, San Francisco", cat: "Portrait", src: "photos/portrait-18", w: 2798, h: 4000, exif: "" },
+    { title: "Night on the Embarcadero", place: "Embarcadero, San Francisco", cat: "Portrait", src: "photos/portrait-19", w: 4000, h: 2376, exif: "" },
+    { title: "Under the cypress", place: "San Francisco", cat: "Portrait", src: "photos/portrait-20", w: 2667, h: 4000, exif: "" },
+    { title: "Walking the path", place: "San Francisco", cat: "Portrait", src: "photos/portrait-21", w: 2667, h: 4000, exif: "" },
+    { title: "Among the lilacs", place: "San Francisco", cat: "Portrait", src: "photos/portrait-22", w: 2667, h: 4000, exif: "" },
+    { title: "Hug on the steps", place: "San Francisco", cat: "Portrait", src: "photos/portrait-23", w: 2667, h: 4000, exif: "" },
+    { title: "Steps, side glance", place: "San Francisco", cat: "Portrait", src: "photos/portrait-24", w: 2667, h: 4000, exif: "" },
+    { title: "Headlights in the garage", place: "Bay Area", cat: "Portrait", src: "photos/portrait-25", w: 4000, h: 2667, exif: "" },
+    { title: "Seated by the wheel", place: "Bay Area", cat: "Portrait", src: "photos/portrait-26", w: 2667, h: 4000, exif: "" },
+    { title: "Windswept at dusk", place: "Bay Area", cat: "Portrait", src: "photos/portrait-27", w: 4000, h: 2667, exif: "" },
+    { title: "Smiling on the bench", place: "Bay Area", cat: "Portrait", src: "photos/portrait-28", w: 2731, h: 4000, exif: "" },
+    { title: "Cap raised, nursing class of 2025", place: "Legion of Honor, San Francisco", cat: "Portrait", src: "photos/portrait-29", w: 4000, h: 2667, exif: "" },
+    { title: "Under the colonnade", place: "Legion of Honor, San Francisco", cat: "Portrait", src: "photos/portrait-30", w: 2665, h: 4000, exif: "" }
+  ]
+};
+
+/* ---- Sample image generator (delete once you have real photos) ---- */
+const PALETTES = {
+  dusk:  ["#2B3446", "#C9826B", "#F2C48D"],
+  night: ["#1C1712", "#4A3A2A", "#D7A24A"],
+  fog:   ["#8C8574", "#BDB5A2", "#E4DECF"],
+  warm:  ["#3A2418", "#A5582E", "#E9B66B"],
+  skin:  ["#3B3330", "#9C7B68", "#D9C1AE"],
+  steel: ["#2A2620", "#6B6455", "#C2B9A6"],
+  sea:   ["#2A3226", "#6B7A55", "#D8D6C2"]
+};
+function sampleImage(kind, tall, seed) {
+  const w = 900, h = tall ? 1125 : 600;
+  const c = document.createElement("canvas"); c.width = w; c.height = h;
+  const x = c.getContext("2d"); const [a, b, d] = PALETTES[kind] || PALETTES.fog;
+  const g = x.createLinearGradient(0, 0, 0, h);
+  g.addColorStop(0, d); g.addColorStop(.55, b); g.addColorStop(1, a);
+  x.fillStyle = g; x.fillRect(0, 0, w, h);
+  let s = seed * 9301 + 49297; const r = () => ((s = (s * 9301 + 49297) % 233280) / 233280);
+  x.fillStyle = a; x.globalAlpha = .55; x.beginPath(); x.moveTo(0, h);
+  for (let i = 0; i <= 12; i++) x.lineTo(i * w / 12, h * (.55 + r() * .25));
+  x.lineTo(w, h); x.fill();
+  x.globalAlpha = .9; x.fillStyle = a;
+  for (let i = 0; i < 9; i++) { const bw = 40 + r() * 90, bh = h * (.12 + r() * .3); x.fillRect(r() * w, h - bh, bw, bh); }
+  x.globalAlpha = .06; for (let i = 0; i < 3500; i++) { x.fillStyle = r() > .5 ? "#fff" : "#000"; x.fillRect(r() * w, r() * h, 1.5, 1.5); }
+  return c.toDataURL("image/jpeg", .82);
+}
+
+/* ---- Render ---- */
+const $ = (id) => document.getElementById(id);
+const pad = (n) => String(n).padStart(2, "0");
+let current = "Home", visible = [], lbIndex = 0;
+
+function renderNav() {
+  const items = [["home", "Home"], ["work", "Work"], ["about", "About"], ["contact", "Contact"]];
+  if (SITE.features.booking) items.push(["book", "Book"]);
+  if (SITE.features.shop) items.push(["shop", "Prints"]);
+  $("nav").innerHTML = items.map(([id, l]) => `<li><a href="#${id}">${l}</a></li>`).join("");
+  $("book").hidden = !SITE.features.booking;
+  $("shop").hidden = !SITE.features.shop;
+}
+function renderFilters() {
+  $("filters").innerHTML = ["Home", ...SITE.categories].map(c =>
+    `<button type="button" aria-pressed="${c === current}" data-cat="${c}">${c === "Home" ? "All work" : c}</button>`).join("");
+}
+/* Work index: one card per category, cover = that tab's top photo */
+function renderIndex() {
+  const g = $("grid");
+  g.classList.remove("strip"); g.classList.add("index"); g.removeAttribute("tabindex"); g.removeAttribute("aria-label");
+  $("strip-ctrl").hidden = true;
+  // Selected collage (justified rows, full shapes)
+  visible = SITE.selected.map(src => SITE.photos.find(p => p.src === src)).filter(Boolean);
+  $("collage").innerHTML = visible.map((p, i) => `
+    <figure class="frame" style="--r:${(p.w / p.h).toFixed(4)}">
+      <button type="button" data-i="${i}" aria-label="Open ${p.title}">
+        <div class="ph" style="aspect-ratio:${p.w} / ${p.h}"><img src="${p.src}-800.jpg" srcset="${srcsetFor(p)}" sizes="(max-width: 760px) 60vw, 40vw" width="${p.w}" height="${p.h}" alt="${p.title}" loading="lazy" decoding="async"></div>
+      </button>
+    </figure>`).join("");
+  requestAnimationFrame(layoutCollage);
+  watch($("collage").querySelectorAll(".frame"), true);
+  g.innerHTML = SITE.categories.map(c => {
+    const n = SITE.photos.filter(p => p.cat === c).length, k = c.toLowerCase();
+    return `<a class="card" href="#${k}" data-cat="${c}">
+      <span class="card-img"><img src="photos/card-${k}.jpg" alt="" loading="lazy" decoding="async"></span>
+      <span class="card-title">${c}</span>
+      <span class="card-count">${n} photos</span>
+    </a>`;
+  }).join("");
+  watch(g.querySelectorAll(".card"), true);
+}
+function renderGrid() {
+  if (current === "Home") { renderIndex(); return; }
+  visible = SITE.photos.map((p, i) => ({ ...p, n: i + 1 })).filter(p => p.cat === current);
+  if (!visible.length) {
+    $("grid").innerHTML = `<p class="empty">No photos here yet. Add <code>featured: true</code> to a photo to show it on Home.</p>`;
+    return;
+  }
+  const strip = current !== "Home";
+  $("grid").classList.toggle("strip", strip);
+  $("grid").classList.toggle("index", !strip);
+  $("strip-ctrl").hidden = !strip;
+  if (strip) { $("grid").setAttribute("tabindex", "0"); $("grid").setAttribute("aria-label", current + " photos"); }
+  else { $("grid").removeAttribute("tabindex"); $("grid").removeAttribute("aria-label"); }
+  $("grid").scrollLeft = 0;
+  // Looping carousel: the photos are laid out three times (before / main / after) so the
+  // last photo always sits to the left of the first. We quietly jump back to the middle set.
+  loopN = visible.length;
+  const copies = strip && loopN > 1 ? 3 : 1;
+  const items = [];
+  for (let c = 0; c < copies; c++) visible.forEach((p, i) => items.push([p, i]));
+  $("grid").innerHTML = items.map(([p, i]) => `
+    <figure class="frame" style="--r:${p.src ? (p.w / p.h).toFixed(4) : (p.tall ? 0.8 : 1.5)}">
+      <button type="button" data-i="${i}" aria-label="Open ${p.title}">
+        ${p.src
+          ? `<div class="ph" style="aspect-ratio:${p.w} / ${p.h}"><img src="${p.src}-800.jpg" srcset="${srcsetFor(p)}" sizes="${strip ? "(max-width: 760px) 84vw, 60vw" : "(max-width: 760px) 60vw, 40vw"}" width="${p.w}" height="${p.h}" alt="${p.title}" loading="lazy" decoding="async"></div>`
+          : `<div class="ph${p.tall ? " tall" : ""}"><img src="${p.img}" alt="${p.title}, ${p.place}" loading="lazy"><span class="sample">Sample</span></div>`}
+      </button>
+    </figure>`).join("");
+  if (strip) stripJump(copies === 3 ? loopN : 0); else { layoutCollage(); watch($("grid").querySelectorAll(".frame"), true); }
+}
+
+/* Home collage: break photos into rows that exactly fill the width.
+   Each row's height is chosen so its photos (at their real shapes) add up to the full width. */
+function layoutCollage() {
+  const g = $("collage"); if (!g || $("index-top").offsetParent === null) return;
+  const frames = [...g.querySelectorAll(".frame")]; if (!frames.length) return;
+  const W = g.clientWidth, gap = parseFloat(getComputedStyle(g).columnGap) || 16;
+  const target = W < 600 ? 190 : W < 1000 ? 240 : 300;
+  const rs = frames.map(f => +f.style.getPropertyValue("--r"));
+  // Split the photos into rows that each fill the full width, choosing the split whose
+  // row heights stay closest to the target (no gaps, no oversized or squashed rows).
+  const n = rs.length, best = Array(n + 1).fill(Infinity), cut = Array(n + 1).fill(0);
+  best[0] = 0;
+  for (let j = 1; j <= n; j++) {
+    let sum = 0;
+    for (let i = j - 1; i >= 0; i--) {
+      sum += rs[i];
+      const h = (W - gap * (j - i - 1)) / sum;
+      if (h < target * 0.45) break;
+      const c = best[i] + Math.log(h / target) ** 2 * (h > target ? 1.6 : 1);
+      if (c < best[j]) { best[j] = c; cut[j] = i; }
+    }
+  }
+  for (let j = n; j > 0; j = cut[j]) {
+    const i = cut[j]; let sum = 0;
+    for (let k = i; k < j; k++) sum += rs[k];
+    const h = (W - gap * (j - i - 1)) / sum;
+    for (let k = i; k < j; k++) { frames[k].style.flex = "0 0 auto"; frames[k].style.width = (rs[k] * h - 0.05).toFixed(2) + "px"; }
+  }
+}
+let collageT = 0;
+addEventListener("resize", () => { clearTimeout(collageT); collageT = setTimeout(layoutCollage, 120); });
+// Re-fit whenever the panel's width changes for any reason (a scrollbar appearing, fonts loading, the window resizing).
+if ("ResizeObserver" in window && $("collage")) {
+  let lastW = 0;
+  new ResizeObserver(([e]) => { const w = Math.round(e.contentRect.width); if (w && w !== lastW) { lastW = w; layoutCollage(); } }).observe($("collage"));
+}
+
+/* Looping carousel: track the centered photo, step with arrows/keys/swipe */
+let stripIdx = 0, loopN = 0, settleT = 0;
+const frameEls = () => [...$("grid").querySelectorAll(".frame")];
+const looping = () => frameEls().length === loopN * 3 && loopN > 1;
+const centerOf = (g, f) => f.offsetLeft + f.offsetWidth / 2 - g.clientWidth / 2;
+function markStrip(k) {
+  const frames = frameEls(); if (!frames.length) return;
+  stripIdx = k;
+  frames.forEach((f, i) => f.classList.toggle("current", i === k));
+  const n = loopN || frames.length;
+  $("s-count").textContent = (k % n) + 1 + " / " + n;
+  const loop = looping();
+  $("s-prev").disabled = !loop && k === 0; $("s-next").disabled = !loop && k === frames.length - 1;
+}
+function nearestCentered() {
+  const g = $("grid"), mid = g.scrollLeft + g.clientWidth / 2;
+  let best = 0, d = Infinity;
+  frameEls().forEach((f, i) => { const x = Math.abs(f.offsetLeft + f.offsetWidth / 2 - mid); if (x < d) { d = x; best = i; } });
+  return best;
+}
+function stripJump(k) { // instant, no animation
+  const g = $("grid"), f = frameEls()[k]; if (!f) return;
+  const prev = g.style.scrollBehavior; g.style.scrollBehavior = "auto";
+  g.scrollLeft = centerOf(g, f); g.style.scrollBehavior = prev;
+  markStrip(k);
+}
+function recenter() { // if we've drifted into a copy, hop to the same photo in the middle set
+  if (!looping()) return;
+  const k = nearestCentered();
+  if (k < loopN || k >= loopN * 2) stripJump(loopN + (k % loopN)); else markStrip(k);
+}
+function stripGo(k) {
+  const frames = frameEls(); if (!frames.length) return;
+  if (!looping()) k = Math.max(0, Math.min(frames.length - 1, k));
+  const g = $("grid"); markStrip(k);
+  g.scrollTo({ left: centerOf(g, frames[k]), behavior: reduce ? "auto" : "smooth" });
+  clearTimeout(settleT); settleT = setTimeout(recenter, reduce ? 0 : 650);
+}
+let stripRaf = 0;
+$("grid").addEventListener("scroll", () => {
+  if (!$("grid").classList.contains("strip")) return;
+  cancelAnimationFrame(stripRaf); stripRaf = requestAnimationFrame(() => markStrip(nearestCentered()));
+  clearTimeout(settleT); settleT = setTimeout(recenter, 160);
+}, { passive: true });
+$("s-prev").addEventListener("click", () => stripGo(stripIdx - 1));
+$("s-next").addEventListener("click", () => stripGo(stripIdx + 1));
+$("grid").addEventListener("keydown", e => {
+  if (!$("grid").classList.contains("strip") || !$("lb").hidden) return;
+  if (e.key === "ArrowRight") { e.preventDefault(); stripGo(stripIdx + 1); }
+  if (e.key === "ArrowLeft") { e.preventDefault(); stripGo(stripIdx - 1); }
+});
+addEventListener("resize", () => { if ($("grid").classList.contains("strip")) stripJump(stripIdx); });
+
+/* Scroll reveal */
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const io = "IntersectionObserver" in window && !reduce ? new IntersectionObserver(entries => {
+  entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } });
+}, { rootMargin: "0px 0px -16px 0px" }) : null;
+function watch(els, stagger) {
+  if (!io) return;
+  let k = 0;
+  els.forEach(el => {
+    if (stagger) el.style.setProperty("--d", (k++ % 3) * 0.08 + "s");
+    const below = el.getBoundingClientRect().top > innerHeight * .92;
+    if (below || stagger) { el.classList.add("reveal"); io.observe(el); }
+  });
+}
+function openLb(i) {
+  lbRemember();
+  lbSingle = false; $("lb").classList.remove("single");
+  lbIndex = (i + visible.length) % visible.length; const p = visible[lbIndex];
+  lbShow(p.img, p.src ? p.src + "-full.jpg" : null); $("lb-img").alt = p.title;
+  $("lb-count").textContent = (lbIndex + 1) + " / " + visible.length;
+  $("lb-title").textContent = p.title; $("lb-place").textContent = p.place; $("lb-exif").textContent = p.exif;
+  const img = $("lb-img"); img.style.animation = "none"; void img.offsetWidth; img.style.animation = "";
+  $("lb").classList.remove("closing"); $("lb").hidden = false; $("lb-close").focus();
+}
+/* Open one photo on its own (the top photo): no prev/next or counter */
+let lbSingle = false;
+function openSingle(src, title, place) {
+  lbRemember();
+  lbSingle = true; $("lb").classList.add("single");
+  lbShow(src, null); $("lb-img").alt = title;
+  $("lb-title").textContent = title; $("lb-place").textContent = place; $("lb-exif").textContent = "";
+  const img = $("lb-img"); img.style.animation = "none"; void img.offsetWidth; img.style.animation = "";
+  $("lb").classList.remove("closing"); $("lb").hidden = false; $("lb-close").focus();
+}
+const lbStep = d => { if (!lbSingle) openLb(lbIndex + d); };
+/* Viewer accessibility: remember what opened it, keep Tab inside, return focus on close */
+let lbOpener = null;
+const lbRemember = () => { if ($("lb").hidden) lbOpener = document.activeElement; };
+$("lb").addEventListener("keydown", e => {
+  if (e.key !== "Tab") return;
+  const f = [...$("lb").querySelectorAll("button")].filter(x => x.offsetParent !== null);
+  if (!f.length) return;
+  const first = f[0], last = f[f.length - 1];
+  if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+  else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  else if (!$("lb").contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+});
+document.addEventListener("focusin", e => { if (!$("lb").hidden && !$("lb").contains(e.target)) $("lb-close").focus(); });
+const closeLb = () => {
+  const lb = $("lb"); if (lb.hidden) return;
+  const back = lbOpener; lbOpener = null;
+  setTimeout(() => { if (back && document.contains(back) && back.offsetParent !== null) back.focus({ preventScroll: true }); }, reduce ? 0 : 230);
+  if (reduce) { lb.hidden = true; return; }
+  lb.classList.add("closing");
+  setTimeout(() => { lb.hidden = true; lb.classList.remove("closing"); }, 220);
+};
+
+SITE.photos.forEach((p, i) => { p.img = p.src ? p.src + "-1600.jpg" : sampleImage(p.sample, p.tall, i + 3); });
+
+/* ---- Image quality ----
+   Each photo has three sizes: -800 and -1600 (long edge) and -full (original resolution).
+   Grid and carousel: the browser picks the smallest file that is sharp on this screen.
+   Viewer: shows -1600 right away, then swaps in -full once it has loaded, on screens
+   big or dense enough to benefit (skipped when the visitor has Data Saver on). */
+function srcsetFor(p) {
+  const long = Math.max(p.w, p.h), wAt = e => Math.round(p.w * Math.min(1, e / long));
+  return `${p.src}-800.jpg ${wAt(800)}w, ${p.src}-1600.jpg ${wAt(1600)}w, ${p.src}-full.jpg ${p.w}w`;
+}
+const wantsFull = () => {
+  const c = navigator.connection; if (c && c.saveData) return false;
+  return Math.max(innerWidth, innerHeight) * (devicePixelRatio || 1) > 1700;
+};
+let lbToken = 0;
+function lbShow(low, full) {
+  const img = $("lb-img"), t = ++lbToken;
+  img.src = low;
+  if (!full || !wantsFull()) return;
+  const pre = new Image();
+  pre.onload = () => { if (t === lbToken) img.src = full; };
+  pre.src = full;
+}
+$("email-text").textContent = SITE.email;
+$("mini-email").textContent = SITE.email;
+/* Split text into word and letter spans for the hover wave */
+function splitLetters(h) {
+  h.setAttribute("aria-label", h.textContent.replace(/\s+/g, " ").trim());
+  let i = 0;
+  const wrap = el => {
+    [...el.childNodes].forEach(n => {
+      if (n.nodeType === 3) {
+        const frag = document.createDocumentFragment();
+        n.textContent.split(/(\s+)/).forEach(part => {
+          if (!part) return;
+          if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(" ")); return; }
+          const w = document.createElement("span"); w.className = "w"; w.setAttribute("aria-hidden", "true");
+          [...part].forEach(c => { const s = document.createElement("span"); s.className = "ch"; s.style.setProperty("--i", i++); s.textContent = c; w.appendChild(s); });
+          frag.appendChild(w);
+        });
+        n.replaceWith(frag);
+      } else if (n.nodeType === 1) wrap(n);
+    });
+  };
+  wrap(h);
+}
+splitLetters($("hero-title"));
+splitLetters(document.querySelector(".brand"));
+
+/* Per-tab top photo, cross-faded between two stacked layers */
+const HERO_SAMPLES = { Home: ["dusk", 42], Street: ["night", 51], Landscape: ["sea", 63], Portrait: ["skin", 88] };
+const heroSrc = {};
+const heroFor = cat => {
+  if (!heroSrc[cat]) { const [k, seed] = HERO_SAMPLES[cat] || HERO_SAMPLES.Home; heroSrc[cat] = SITE.heroes[cat] || sampleImage(k, false, seed); }
+  return heroSrc[cat];
+};
+let heroFront = $("hero-bg"), heroBack = $("hero-bg2");
+function updateHeroView(cat) {
+  const real = !!SITE.heroes[cat];
+  document.querySelector(".hero").classList.toggle("viewable", real);
+}
+function openHero() {
+  const src = SITE.heroes[current]; if (!src) return;
+  const info = (SITE.heroInfo && SITE.heroInfo[current]) || {};
+  openSingle(src, info.title || current, info.place || "");
+}
+document.querySelector(".hero").addEventListener("click", e => {
+  if (e.target.closest(".h1, .hero > div, .hero-cat, a, button")) return; // keep the text selectable
+  openHero();
+});
+function setHero(cat) {
+  updateHeroView(cat);
+  $("hero-sample").hidden = !!SITE.heroes[cat];
+  const src = heroFor(cat);
+  if (reduce) { heroFront.src = src; return; }
+  heroBack.src = src;
+  const swap = () => { heroBack.classList.remove("off"); heroFront.classList.add("off"); [heroFront, heroBack] = [heroBack, heroFront]; };
+  heroBack.decode ? heroBack.decode().then(swap, swap) : swap();
+}
+heroFront.src = heroFor("Home"); $("hero-sample").hidden = !!SITE.heroes.Home;
+updateHeroView("Home");
+Object.keys(SITE.heroes).forEach(heroFor); // pre-build so tab switches are instant
+$("portrait-img").src = SITE.portrait || sampleImage("skin", true, 77);
+$("portrait-sample").hidden = !!SITE.portrait;
+$("yr").textContent = new Date().getFullYear();
+renderNav(); renderFilters(); renderGrid();
+
+/* Tabs: each has its own link (#street, #landscape, #portrait) and works with the back button */
+const tabFromHash = () => {
+  const h = location.hash.slice(1).toLowerCase();
+  return SITE.categories.find(c => c.toLowerCase() === h) || "Home";
+};
+function selectTab(cat, { push = true, scroll = true, animate = true } = {}) {
+  if (cat === current) return;
+  current = cat; renderFilters();
+  $("work-title").textContent = cat === "Home" ? "Selected work" : "All " + cat.toLowerCase();
+  if (push) {
+    try { history.pushState(null, "", "#" + (cat === "Home" ? "work" : cat.toLowerCase())); } catch (_) {}
+  }
+  setHero(current);
+  document.querySelector(".hero").classList.toggle("bare", current !== "Home");
+  setFooters();
+  if (current !== "Home") {
+    const set = c => {
+      const n = SITE.photos.filter(p => p.cat === c).length;
+      $("hero-cat-name").innerHTML = [...c].map((ch, i) => `<span class="ch" style="--i:${i}">${ch}</span>`).join("");
+      $("hero-cat-name").setAttribute("aria-label", c);
+      $("hero-cat").dataset.cat = c;
+      $("hero-cat-count").textContent = n + (n === 1 ? " photo" : " photos");
+    };
+    // Switching between categories: fade the old title out, swap the word, fade the new one in
+    const hc = $("hero-cat"), wasShowing = hc.dataset.cat && view === "work" && !reduce && animate;
+    clearTimeout(hc._t);
+    if (wasShowing) { hc.classList.add("swap"); const c = current; hc._t = setTimeout(() => { set(c); hc.classList.remove("swap"); }, 220); }
+    else set(current);
+  }
+  if (scroll && scrollY > 40) scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
+  if (reduce || !animate) { renderGrid(); return; }
+  $("grid").classList.add("fading");
+  setTimeout(() => { renderGrid(); $("grid").classList.remove("fading"); }, 200);
+}
+/* ---- Pages ----
+   #home (default), #work / #street / #landscape / #portrait, #about, #contact */
+let view = "";
+function syncIndex() { document.body.classList.toggle("on-index", view === "work" && current === "Home"); }
+function setFooters() {
+  syncIndex();
+  const cat = view === "work" && current !== "Home";
+  $("foot-mini").hidden = !cat; $("foot-main").hidden = cat;
+}
+function showView(v, { scroll = true } = {}) {
+  const changed = v !== view; view = v;
+  document.querySelectorAll("[data-view]").forEach(el => {
+    el.hidden = el.dataset.view !== v;
+    if (changed && !el.hidden) { el.classList.remove("page-in"); void el.offsetWidth; el.classList.add("page-in"); }
+  });
+  if (changed) ["foot-main", "foot-mini"].forEach(id => { const f = $(id); f.classList.remove("page-in"); void f.offsetWidth; f.classList.add("page-in"); });
+  document.body.classList.toggle("on-home", v === "home");
+  document.querySelectorAll("#nav a").forEach(a => { if (a.getAttribute("href") === "#" + v) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
+  setFooters();
+  if (changed && scroll) { scrollTo({ top: 0, behavior: "auto" }); setNavAway(false); }
+  if (v === "work" && changed) requestAnimationFrame(() => { if (current !== "Home") stripJump(stripIdx); else layoutCollage(); });
+}
+/* Page title, main heading and focus for screen readers */
+let routedOnce = false;
+function announcePage() {
+  const name = view === "home" ? "" : view === "work" ? (current === "Home" ? "Work" : current + " photography") : view[0].toUpperCase() + view.slice(1);
+  document.title = name ? name + " · Justin Khyle Photography" : "Justin Khyle Photography";
+  $("page-h1").textContent = name || "Justin Khyle Photography";
+  if (!routedOnce) { routedOnce = true; return; }
+  const target = view === "about" ? $("about-title") : view === "contact" ? $("contact-title") : $("page-h1");
+  target.focus({ preventScroll: true });
+}
+function route() {
+  const h = location.hash.slice(1).toLowerCase();
+  const cat = SITE.categories.find(c => c.toLowerCase() === h);
+  if (cat || h === "work") {
+    showView("work");
+    selectTab(cat || "Home", { push: false, scroll: false, animate: false });
+    announcePage();
+    return;
+  }
+  showView(["about", "contact"].includes(h) ? h : "home");
+  announcePage();
+}
+function go(v) {
+  try { history.pushState(null, "", "#" + v); } catch (_) {}
+  route();
+}
+addEventListener("popstate", route);
+addEventListener("hashchange", route);
+
+$("filters").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  selectTab(b.dataset.cat);
+  announcePage();
+});
+
+
+/* Social links */
+const SOCIAL_ICONS = { YouTube: '<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="5" width="19" height="14" rx="4.5"/><path d="M10 9.2v5.6l4.8-2.8z" fill="currentColor" stroke="none"/></svg>', Instagram: '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>' };
+const socialHTML = (small, list = SITE.socials) => list.map(s =>
+  small && SOCIAL_ICONS[s.label]
+    ? `<li><a class="social-icon" href="${s.url}" target="_blank" rel="noopener" aria-label="${s.label}">${SOCIAL_ICONS[s.label]}</a></li>`
+    : `<li><a href="${s.url}" target="_blank" rel="noopener">${s.label}${small ? "" : ` <small>${s.handle}</small>`}</a></li>`).join("");
+$("socials").innerHTML = socialHTML(false, SITE.socials.filter(s => s.label !== "YouTube"));
+$("socials-foot").innerHTML = socialHTML(true);
+$("socials-mini").innerHTML = socialHTML(true);
+
+
+
+/* Smooth nav jumps that clear the sticky header */
+document.addEventListener("click", e => {
+  const a = e.target.closest('a[href^="#"]'); if (!a) return;
+  const id = a.getAttribute("href").slice(1).toLowerCase();
+  if (["home", "work", "about", "contact", ...SITE.categories.map(c => c.toLowerCase())].includes(id)) {
+    e.preventDefault(); go(id); a.blur(); return;
+  }
+  const t = document.getElementById(id); if (!t) return;
+  e.preventDefault();
+  // Move focus to the section (not left on the nav link) so the header can hide again
+  if (!t.hasAttribute("tabindex")) t.setAttribute("tabindex", "-1");
+  t.focus({ preventScroll: true });
+  jumping = true;
+  t.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+  // When the jump finishes, tuck the header away so the section has the full screen
+  const done = () => {
+    jumping = false;
+    const head = $("top");
+    setNavAway(scrollY > head.offsetHeight * 2);
+    removeEventListener("scrollend", done); clearTimeout(fallback);
+  };
+  const fallback = setTimeout(done, 1000);
+  if ("onscrollend" in window) addEventListener("scrollend", done, { once: true });
+});
+/* Keep the sticky filter bar flush under the header */
+const setHH = () => document.documentElement.style.setProperty("--hh", $("top").offsetHeight + "px");
+setHH(); addEventListener("resize", setHH);
+
+/* Swipe between photos in the viewer */
+let sx = null, sy = 0;
+$("lb").addEventListener("touchstart", e => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+$("lb").addEventListener("touchend", e => {
+  if (sx === null) return;
+  const dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy; sx = null;
+  if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) lbStep(dx < 0 ? 1 : -1);
+  else if (dy > 90 && Math.abs(dy) > Math.abs(dx)) closeLb();
+}, { passive: true });
+/* Gentle parallax on the hero photo */
+if (!reduce) {
+  let ticking = false;
+  addEventListener("scroll", () => {
+    if (ticking) return; ticking = true;
+    requestAnimationFrame(() => {
+      const y = Math.min(scrollY, innerHeight);
+      const t = `translateY(${y * 0.18}px) scale(1.04)`;
+      $("hero-bg").style.transform = t; $("hero-bg2").style.transform = t;
+      ticking = false;
+    });
+  }, { passive: true });
+}
+let lastY = scrollY, jumping = false, navHover = false;
+/* Keep the nav up while the cursor is on it; tuck it away once the cursor leaves */
+function setNavAway(away) {
+  if (away && navHover) return;
+  $("top").classList.toggle("away", away);
+  document.documentElement.classList.toggle("nav-away", away);
+}
+$("top").addEventListener("mouseenter", () => { navHover = true; });
+$("top").addEventListener("mouseleave", () => {
+  navHover = false;
+  if (!jumping) setNavAway(scrollY > $("top").offsetHeight * 2);
+});
+addEventListener("scroll", () => {
+  const y = scrollY, head = $("top");
+  head.classList.toggle("scrolled", y > 8);
+  // Nav shows only near the top of the page
+  const away = y > head.offsetHeight * 2;
+  if (!jumping) setNavAway(away);
+  lastY = y;
+}, { passive: true });
+watch(document.querySelectorAll(".bar, .split > *, .future, footer"), false);
+$("grid").addEventListener("click", e => { const b = e.target.closest("button[data-i]"); if (b) openLb(+b.dataset.i); });
+$("collage").addEventListener("click", e => { const b = e.target.closest("button[data-i]"); if (b) openLb(+b.dataset.i); });
+$("lb-close").onclick = closeLb;
+$("lb-prev").onclick = () => lbStep(-1);
+$("lb-next").onclick = () => lbStep(1);
+document.addEventListener("keydown", e => {
+  if ($("lb").hidden) return;
+  if (e.key === "Escape") closeLb();
+  if (e.key === "ArrowRight") lbStep(1);
+  if (e.key === "ArrowLeft") lbStep(-1);
+});
+$("copy-email").addEventListener("click", () => {
+  const done = () => { $("copy-email").textContent = "Copied"; setTimeout(() => $("copy-email").textContent = "Copy", 1500); };
+  try {
+    navigator.clipboard.writeText(SITE.email).then(done, () => selectEmail());
+  } catch (_) { selectEmail(); }
+});
+function selectEmail() { const r = document.createRange(); r.selectNodeContents($("email-text")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+
+/* Contact form → Formspree. Messages arrive at the email on your Formspree account. */
+$("contact-form").addEventListener("submit", async e => {
+  e.preventDefault();
+  const f = e.target, status = $("status"), send = $("send");
+  if (!f.checkValidity()) { status.textContent = "Add your name, a valid email, and a message, then send again."; return; }
+  if (!SITE.formspreeId || SITE.formspreeId === "YOUR_FORM_ID") {
+    status.textContent = "The form isn't connected yet. Email " + SITE.email + " for now."; return;
+  }
+  const data = new FormData(f);
+  data.append("_subject", `${data.get("type")} inquiry from ${data.get("name")}`);
+  send.disabled = true; send.textContent = "Sending…"; status.textContent = "";
+  try {
+    const res = await fetch("https://formspree.io/f/" + SITE.formspreeId, {
+      method: "POST", body: data, headers: { Accept: "application/json" }
+    });
+    if (!res.ok) throw new Error(res.status);
+    f.reset();
+    status.textContent = "Message sent. I'll get back to you soon.";
+  } catch (_) {
+    status.textContent = "That didn't go through. Try again, or email " + SITE.email + " directly.";
+  } finally {
+    send.disabled = false; send.textContent = "Send message";
+  }
+});
+
+/* Home slideshow: each photo shows for SLIDE_MS, then fades to the next.
+   Pauses on hover/focus, when the tab is hidden, or when the visitor presses pause.
+   With reduced motion turned on it starts paused. */
+const SLIDE_MS = 3000;
+const slides = SITE.homeSlides.map(src => {
+  if (src === "hero") return { img: SITE.heroes.Home, full: SITE.heroes.Home, ...(SITE.heroInfo.Home || {}) };
+  const p = SITE.photos.find(x => x.src === src);
+  return p ? { img: p.src + "-1600.jpg", full: p.src + "-full.jpg", srcset: srcsetFor(p), title: p.title, place: p.place } : null;
+}).filter(Boolean);
+let slideIdx = 0, slideTimer = 0, showPaused = reduce, showHold = false;
+$("home-slides").innerHTML = slides.map((s, i) =>
+  `<img src="${s.img}" ${s.srcset ? `srcset="${s.srcset}" sizes="(max-width: 1000px) 100vw, 980px"` : ""} alt="${s.title || "Featured photo"}" ${i ? 'loading="lazy"' : ""} decoding="async" class="${i ? "" : "on"}" aria-hidden="${i ? "true" : "false"}">`).join("");
+$("home-dots").innerHTML = slides.map((s, i) => `<button type="button" aria-label="Photo ${i + 1} of ${slides.length}: ${s.title || ""}" aria-current="${!i}"></button>`).join("");
+const PLAY = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg>';
+const PAUSE = '<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3.5" y="2.5" width="3" height="11" rx="1" fill="currentColor"/><rect x="9.5" y="2.5" width="3" height="11" rx="1" fill="currentColor"/></svg>';
+function showSlide(i) {
+  slideIdx = (i + slides.length) % slides.length;
+  $("home-slides").querySelectorAll("img").forEach((im, k) => { im.classList.toggle("on", k === slideIdx); im.setAttribute("aria-hidden", k !== slideIdx); });
+  $("home-dots").querySelectorAll("button").forEach((b, k) => b.setAttribute("aria-current", k === slideIdx));
+}
+function syncShow() {
+  clearInterval(slideTimer);
+  const pb = $("home-pause");
+  const want = showPaused ? "play" : "pause";
+  if (pb.dataset.icon !== want) { pb.dataset.icon = want; pb.innerHTML = showPaused ? PLAY : PAUSE; }
+  pb.setAttribute("aria-label", showPaused ? "Play slideshow" : "Pause slideshow");
+  if (!showPaused && !showHold && slides.length > 1 && view === "home" && !document.hidden)
+    slideTimer = setInterval(() => showSlide(slideIdx + 1), SLIDE_MS);
+}
+$("home-dots").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  showSlide([...$("home-dots").children].indexOf(b)); syncShow();
+});
+$("home-pause").addEventListener("click", () => { showPaused = !showPaused; syncShow(); });
+const hold = on => { showHold = on; syncShow(); };
+$("home-photo-btn").addEventListener("mouseenter", () => hold(true));
+$("home-photo-btn").addEventListener("mouseleave", () => hold(false));
+$("home-photo-btn").addEventListener("focus", () => hold(true));
+$("home-photo-btn").addEventListener("blur", () => hold(false));
+document.addEventListener("visibilitychange", syncShow);
+$("home-photo-btn").addEventListener("click", () => {
+  const s = slides[slideIdx]; openSingle(s.full || s.img, s.title || "", s.place || "");
+});
+{ const _sv = showView; showView = function (...a) { _sv.apply(this, a); syncShow(); }; }
+syncShow();
+route();
+</script>
+
+</body>
+</html>
