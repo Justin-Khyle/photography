@@ -305,6 +305,23 @@ html, body { overflow-x: clip; }
 .show-pause svg { width: 14px; height: 14px; pointer-events: none; }
 /* Home layout preview: slideshow or the Selected work collage */
 .home-show[hidden], .home-collage[hidden], .mag[hidden] { display: none !important; }
+/* Name over the cover photo, whooshing in letter by letter */
+.mag-cover .mp::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(to top, rgba(var(--shade), .72) 0%, rgba(var(--shade), .25) 32%, transparent 58%); transition: opacity .6s ease; }
+.cover-title { position: absolute; left: clamp(18px, 4.5vw, 56px); bottom: clamp(18px, 4.5vw, 52px); z-index: 2; pointer-events: none; color: #F4F1EA; text-shadow: 0 2px 30px rgba(0,0,0,.35); }
+.ct-name { display: block; font: 800 clamp(2.7rem, 9.5vw, 7.8rem)/.88 var(--display); letter-spacing: -.035em; white-space: nowrap; }
+.ct-ch, .ct-sp { display: inline-block; }
+.ct-sub { display: block; margin-top: .75em; font: 600 clamp(.72rem, 1.5vw, 1rem)/1 var(--body); letter-spacing: .45em; text-transform: uppercase; color: var(--accent); }
+.cover-title.play .ct-ch { animation: ctWhoosh .95s cubic-bezier(.16, 1, .3, 1) both; animation-delay: calc(var(--i) * 38ms + .1s); }
+.cover-title.play .ct-sub { animation: ctSub 1.1s cubic-bezier(.16, 1, .3, 1) .55s both; }
+@keyframes ctWhoosh { from { opacity: 0; transform: translateX(-70px) skewX(-14deg); filter: blur(10px); } 60% { filter: blur(0); } }
+@keyframes ctSub { from { opacity: 0; letter-spacing: 1.1em; } }
+/* The name lives on the cover photo, so the header just centers the menu */
+.top .brand { display: none; }
+.top .wrap { justify-content: center; }
+.top nav ul { justify-content: center; gap: clamp(1.4rem, 5vw, 3.25rem); }
+.top nav a { font-size: 1.08rem; }
+@media (max-width: 360px) { .top nav ul { gap: 1.05rem; } .top nav a { font-size: .95rem; } }
+@media (prefers-reduced-motion: reduce) { .cover-title.play .ct-ch, .cover-title.play .ct-sub { animation: none; } }
 /* Magazine home: a long editorial scroll */
 body.home-mag-mode .home-view { align-items: start; min-height: 0; padding-top: var(--s3); }
 .mag { width: 100%; max-width: 1200px; display: grid; gap: var(--s3); align-self: start; padding-bottom: var(--s4); }
@@ -1501,7 +1518,7 @@ function magImg(src) {
   return `<button type="button" class="mp" data-mi="${i}" style="--r:${r};--ar:${p.w} / ${p.h}" aria-label="Open ${p.title}"><img src="${p.src}-800.jpg" srcset="${srcsetFor(p)}" sizes="(max-width: 760px) 100vw, 900px" width="${p.w}" height="${p.h}" alt="${p.title}" loading="lazy" decoding="async"></button>`;
 }
 $("home-mag").innerHTML = MAG.map(b => {
-  if (b.t === "cover") return `<div class="mag-cover"><button type="button" class="mp" data-cover style="--ar:3 / 2" aria-label="View cover photo full screen"><img src="${SITE.heroes.Home}" alt="${(SITE.heroInfo.Home || {}).title || "Cover photo"}" decoding="async"></button>
+  if (b.t === "cover") return `<div class="mag-cover"><button type="button" class="mp" data-cover style="--ar:3 / 2" aria-label="View cover photo full screen"><img src="${SITE.heroes.Home}" alt="${(SITE.heroInfo.Home || {}).title || "Cover photo"}" decoding="async"><span class="cover-title" id="cover-title" aria-hidden="true"><span class="ct-name">${[..."Justin Khyle"].map((c, i) => c === " " ? '<span class="ct-sp">&nbsp;</span>' : `<span class="ct-ch" style="--i:${i}">${c}</span>`).join("")}</span><span class="ct-sub">Photography</span></span></button>
     <div class="mag-meta"><span>Selected work</span><span>Based in San Francisco</span><span>Street · Landscape · Portrait</span></div></div>`;
   if (b.t === "head") return `<div class="mag-head" data-cat="${b.cat}"><span class="mag-num">${b.n}</span><h2 class="mag-title">${b.cat}</h2><a class="mag-more" href="#${b.cat.toLowerCase()}">See all ${SITE.photos.filter(p => p.cat === b.cat).length} →</a></div>`;
   if (b.t === "row") return `<div class="mag-row ${b.cls || ""}">${b.srcs.map(magImg).join("")}</div>`;
@@ -1531,7 +1548,15 @@ function setHomeMode(m) {
   syncShow();
 }
 setHomeMode(homeMode);
+
+/* Cover title: replay the whoosh whenever Home is shown */
+function playCover() {
+  const t = $("cover-title"); if (!t) return;
+  t.classList.remove("play"); void t.offsetWidth; t.classList.add("play");
+}
+{ const _sv3 = showView; showView = function (...a) { const was = view; _sv3.apply(this, a); if (view === "home" && was !== "home") playCover(); }; }
 route();
+if (view === "home") playCover();
 
 
 </script>
