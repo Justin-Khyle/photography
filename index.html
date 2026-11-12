@@ -192,6 +192,22 @@ html, body { overflow-x: clip; }
 .on-index #work { padding-top: var(--s5); }
 .on-index .sheet { background: none; padding: 0; margin-inline: 0 !important; }
 .index-top { display: none; }
+/* Collections stacked: photo on the left, title on the right */
+.grid.index { grid-template-columns: minmax(0, 1fr) !important; gap: var(--s4) !important; }
+.grid.index .card { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); grid-template-rows: 1fr auto auto 1fr;
+  grid-template-areas: "img ." "img title" "img count" "img cta"; column-gap: var(--s4); row-gap: .5rem; align-items: start; }
+.grid.index .card-img { grid-area: img; aspect-ratio: 3 / 2; }
+.grid.index .card-title { grid-area: title; margin: 0; font-size: clamp(2rem, 4.6vw, 3.6rem); }
+.grid.index .card-count { grid-area: count; font-size: .95rem; }
+.card-cta { grid-area: cta; align-self: start; margin-top: var(--s2); font: 500 .9rem/1 var(--body); color: var(--muted); transition: color .3s ease, transform .3s var(--ease, ease); }
+.card:hover .card-cta { color: var(--ink); transform: translateX(4px); }
+@media (max-width: 760px) {
+  .grid.index { gap: var(--s3) !important; }
+  .grid.index .card { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); column-gap: var(--s2); row-gap: .3rem; }
+  .grid.index .card-title { font-size: clamp(1.35rem, 6.4vw, 1.9rem); }
+  .grid.index .card-count { font-size: .82rem; }
+  .card-cta { margin-top: .4rem; font-size: .8rem; }
+}
 .on-index .index-top { display: block; }
 .index-label { font: 600 .7rem/1.2 var(--body); text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin: 0 0 var(--s2); }
 .collage-panel { background: var(--sheet); padding: var(--s2); margin-bottom: var(--s5); }
@@ -209,6 +225,10 @@ html, body { overflow-x: clip; }
 .grid:not(.strip):not(.index) .frame button { width: 100%; }
 .grid:not(.strip):not(.index) .ph { aspect-ratio: var(--r) !important; }
 @media (max-width: 760px) { .grid:not(.strip):not(.index) { gap: var(--s1); --row: 170px; } }
+/* Category pages: magazine-style vertical scroll */
+#grid.magflow { display: grid !important; columns: auto; gap: var(--s2); }
+#grid.magflow::after { display: none; }
+@media (max-width: 760px) { #grid.magflow { gap: var(--s1); } }
 /* Category tabs: one photo at a time, scrolled sideways */
 .grid.strip {
   columns: auto; display: flex; gap: var(--s3); align-items: center;
@@ -283,6 +303,50 @@ html, body { overflow-x: clip; }
 .show-pause { all: unset; cursor: pointer; width: 24px; height: 24px; display: grid; place-items: center; color: var(--muted); transition: color .25s ease; }
 .show-pause:hover { color: var(--ink); }
 .show-pause svg { width: 14px; height: 14px; pointer-events: none; }
+/* Home layout preview: slideshow or the Selected work collage */
+.home-show[hidden], .home-collage[hidden], .mag[hidden] { display: none !important; }
+/* Magazine home: a long editorial scroll */
+body.home-mag-mode .home-view { align-items: start; min-height: 0; padding-top: var(--s3); }
+.mag { width: 100%; max-width: 1200px; display: grid; gap: var(--s3); align-self: start; padding-bottom: var(--s4); }
+.mag-row { display: flex; gap: var(--s2); align-items: flex-start; }
+.mag-row > .mp { flex: calc(var(--r) * 100) 1 0; min-width: 0; } /* scaled so rows whose shapes add up to less than 1 still fill the width */
+.mp { all: unset; display: block; cursor: zoom-in; position: relative; overflow: hidden; background: var(--sheet); }
+.mp img { display: block; width: 100%; height: auto; aspect-ratio: var(--ar); object-fit: cover; transition: transform .9s var(--ease, ease); }
+.mp:hover img { transform: scale(1.025); }
+.mp:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.mag-cover .mp { width: 100%; }
+.mag-cover .mp img { aspect-ratio: auto; width: 100%; height: min(78vh, 760px); object-fit: cover; }
+@media (max-width: 760px) { .mag-cover .mp img { height: auto; aspect-ratio: 4 / 5; } }
+.mag-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .4rem var(--s2); color: var(--muted);
+  font: 600 .72rem/1.3 var(--body); letter-spacing: .16em; text-transform: uppercase; padding-top: .9rem; border-top: 1px solid var(--rule); margin-top: var(--s1); }
+.mag-head { display: grid; grid-template-columns: auto 1fr auto; align-items: baseline; gap: var(--s2); margin-top: var(--s4); padding-bottom: .7rem; border-bottom: 1px solid var(--rule); }
+.mag-num { font: 600 .8rem/1 var(--body); letter-spacing: .14em; color: var(--muted); }
+.mag-title { font: 700 clamp(2rem, 5vw, 3.6rem)/1 var(--display); letter-spacing: -.02em; margin: 0; color: var(--c, var(--ink)); }
+.mag-more { color: var(--muted); text-decoration: none; font: 500 .9rem/1 var(--body); white-space: nowrap; transition: color .25s ease; }
+.mag-more:hover { color: var(--c, var(--accent)); }
+.mag-head[data-cat="Street"] { --c: #FFB085; } .mag-head[data-cat="Landscape"] { --c: #D9EC8E; } .mag-head[data-cat="Portrait"] { --c: #FFC9D3; }
+.mag-quote { margin: var(--s4) auto var(--s2); max-width: 22ch; text-align: center; font: 600 clamp(1.6rem, 3.6vw, 2.8rem)/1.15 var(--display); letter-spacing: -.015em; color: var(--ink); }
+.mag-quote::before { content: "\201C"; display: block; color: var(--accent); font-size: 1.6em; line-height: .6; margin-bottom: .2em; }
+.mag-quote cite { display: block; margin-top: var(--s2); font: 600 .72rem/1 var(--body); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+.mag-end { margin-top: var(--s4); display: grid; gap: var(--s3); justify-items: center; text-align: center; padding: var(--s4) var(--s2); background: var(--sheet); }
+.mag-end h2 { margin: 0; font: 700 clamp(1.6rem, 3.4vw, 2.4rem)/1.1 var(--display); letter-spacing: -.015em; }
+.mag-end p { margin: 0; color: var(--muted); max-width: 46ch; line-height: 1.6; }
+.mag-btns { display: flex; flex-wrap: wrap; gap: var(--s1) var(--s2); justify-content: center; }
+.mag-btn { display: inline-block; padding: .8rem 1.3rem; border-radius: 999px; text-decoration: none; font: 600 .92rem/1 var(--body); border: 1px solid var(--rule); color: var(--ink); transition: background-color .25s ease, color .25s ease, border-color .25s ease; }
+.mag-btn:hover { border-color: var(--ink); }
+.mag-btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.mag-btn.primary:hover { filter: brightness(1.08); }
+.mag-btn:focus-visible, .mag-more:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+@media (max-width: 760px) {
+  .mag { gap: var(--s2); }
+  .mag-row.stack { flex-direction: column; }
+  .mag-row.stack > .mp { flex: none; width: 100%; }
+  .mag-row { gap: var(--s1); }
+  .mag-head { grid-template-columns: 1fr auto; } .mag-num { grid-column: 1 / -1; }
+}
+.home-collage { width: 100%; max-width: 1200px; align-self: start; animation: homeIn .8s var(--ease, ease) both; }
+.home-collage .collage-panel { margin-bottom: 0; }
+body.home-collage-mode .home-view { align-items: start; }
 @keyframes homeIn { from { opacity: 0; transform: translateY(12px) scale(.985); } }
 .home-social { display: flex; gap: var(--s2); align-items: center; }
 .home-ig { color: var(--ink); display: inline-flex; padding: .4rem; border-radius: 10px; transition: color .25s ease, transform .25s ease; }
@@ -445,10 +509,13 @@ nav a, .filters button, .btn, .email button, .lb .ctrl button {
   *, *::before, *::after { transition: none !important; animation: none !important; }
   .reveal { opacity: 1; transform: none; }
 }
+
+
+
+
 </style>
 </head>
 <body>
-
 
 <a class="skip" href="#main-content">Skip to content</a>
 <header class="top" id="top">
@@ -471,6 +538,10 @@ nav a, .filters button, .btn, .email button, .lb .ctrl button {
         <button type="button" class="show-pause" id="home-pause" aria-label="Pause slideshow"></button>
       </div>
     </div>
+    <div class="home-collage" id="home-collage-wrap" hidden>
+      <div class="collage-panel"><div class="collage" id="home-collage" aria-label="Selected work"></div></div>
+    </div>
+    <div class="mag" id="home-mag" hidden></div>
     <div class="home-social">
     <a class="home-ig" id="home-ig" href="https://www.instagram.com/___justinkhyle/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg></a>
       <a class="home-ig" href="https://www.youtube.com/@__JustinKhyle" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="5" width="19" height="14" rx="4.5"/><path d="M10 9.2v5.6l4.8-2.8z" fill="currentColor" stroke="none"/></svg></a>
@@ -496,8 +567,6 @@ nav a, .filters button, .btn, .email button, .lb .ctrl button {
     </div>
     <div class="sheet">
       <div class="index-top" id="index-top">
-        <p class="index-label">Selected work</p>
-        <div class="collage-panel"><div class="collage" id="collage"></div></div>
         <p class="index-label">Collections</p>
       </div>
       <div class="grid" id="grid"></div>
@@ -594,6 +663,10 @@ nav a, .filters button, .btn, .email button, .lb .ctrl button {
     <ul class="socials socials-foot" id="socials-foot" aria-label="Social links"></ul>
   </footer>
 </main>
+
+
+
+
 
 <div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Photo viewer">
   <div class="ctrl">
@@ -820,24 +893,24 @@ function renderFilters() {
 /* Work index: one card per category, cover = that tab's top photo */
 function renderIndex() {
   const g = $("grid");
-  g.classList.remove("strip"); g.classList.add("index"); g.removeAttribute("tabindex"); g.removeAttribute("aria-label");
+  g.classList.remove("strip", "magflow"); g.classList.add("index"); g.removeAttribute("tabindex"); g.removeAttribute("aria-label");
   $("strip-ctrl").hidden = true;
   // Selected collage (justified rows, full shapes)
   visible = SITE.selected.map(src => SITE.photos.find(p => p.src === src)).filter(Boolean);
-  $("collage").innerHTML = visible.map((p, i) => `
+  if ($("collage")) $("collage").innerHTML = visible.map((p, i) => `
     <figure class="frame" style="--r:${(p.w / p.h).toFixed(4)}">
       <button type="button" data-i="${i}" aria-label="Open ${p.title}">
         <div class="ph" style="aspect-ratio:${p.w} / ${p.h}"><img src="${p.src}-800.jpg" srcset="${srcsetFor(p)}" sizes="(max-width: 760px) 60vw, 40vw" width="${p.w}" height="${p.h}" alt="${p.title}" loading="lazy" decoding="async"></div>
       </button>
     </figure>`).join("");
-  requestAnimationFrame(layoutCollage);
-  watch($("collage").querySelectorAll(".frame"), true);
+  if ($("collage")) { requestAnimationFrame(layoutCollage); watch($("collage").querySelectorAll(".frame"), true); }
   g.innerHTML = SITE.categories.map(c => {
     const n = SITE.photos.filter(p => p.cat === c).length, k = c.toLowerCase();
     return `<a class="card" href="#${k}" data-cat="${c}">
       <span class="card-img"><img src="photos/card-${k}.jpg" alt="" loading="lazy" decoding="async"></span>
       <span class="card-title">${c}</span>
       <span class="card-count">${n} photos</span>
+      <span class="card-cta">View collection →</span>
     </a>`;
   }).join("");
   watch(g.querySelectorAll(".card"), true);
@@ -849,34 +922,47 @@ function renderGrid() {
     $("grid").innerHTML = `<p class="empty">No photos here yet. Add <code>featured: true</code> to a photo to show it on Home.</p>`;
     return;
   }
-  const strip = current !== "Home";
-  $("grid").classList.toggle("strip", strip);
-  $("grid").classList.toggle("index", !strip);
-  $("strip-ctrl").hidden = !strip;
-  if (strip) { $("grid").setAttribute("tabindex", "0"); $("grid").setAttribute("aria-label", current + " photos"); }
-  else { $("grid").removeAttribute("tabindex"); $("grid").removeAttribute("aria-label"); }
-  $("grid").scrollLeft = 0;
-  // Looping carousel: the photos are laid out three times (before / main / after) so the
-  // last photo always sits to the left of the first. We quietly jump back to the middle set.
-  loopN = visible.length;
-  const copies = strip && loopN > 1 ? 3 : 1;
-  const items = [];
-  for (let c = 0; c < copies; c++) visible.forEach((p, i) => items.push([p, i]));
-  $("grid").innerHTML = items.map(([p, i]) => `
-    <figure class="frame" style="--r:${p.src ? (p.w / p.h).toFixed(4) : (p.tall ? 0.8 : 1.5)}">
-      <button type="button" data-i="${i}" aria-label="Open ${p.title}">
-        ${p.src
-          ? `<div class="ph" style="aspect-ratio:${p.w} / ${p.h}"><img src="${p.src}-800.jpg" srcset="${srcsetFor(p)}" sizes="${strip ? "(max-width: 760px) 84vw, 60vw" : "(max-width: 760px) 60vw, 40vw"}" width="${p.w}" height="${p.h}" alt="${p.title}" loading="lazy" decoding="async"></div>`
-          : `<div class="ph${p.tall ? " tall" : ""}"><img src="${p.img}" alt="${p.title}, ${p.place}" loading="lazy"><span class="sample">Sample</span></div>`}
-      </button>
-    </figure>`).join("");
-  if (strip) stripJump(copies === 3 ? loopN : 0); else { layoutCollage(); watch($("grid").querySelectorAll(".frame"), true); }
+  // Magazine-style scroll: photos grouped into rows of 1, 2 or 3 at their real shapes
+  const g = $("grid");
+  g.classList.remove("strip", "index"); g.classList.add("magflow");
+  g.removeAttribute("tabindex"); g.setAttribute("aria-label", current + " photos");
+  $("strip-ctrl").hidden = true; loopN = 0;
+  const rows = magRows(visible.map((p, i) => ({ p, i })));
+  g.innerHTML = rows.map(row => `<div class="mag-row">${row.map(({ p, i }) =>
+    `<button type="button" class="mp" data-i="${i}" style="--r:${(p.w / p.h).toFixed(4)};--ar:${p.w} / ${p.h}" aria-label="Open ${p.title}"><img src="${p.src}-800.jpg" srcset="${srcsetFor(p)}" sizes="(max-width: 760px) 100vw, ${row.length === 1 ? "1200px" : "700px"}" width="${p.w}" height="${p.h}" alt="${p.title}" loading="lazy" decoding="async"></button>`).join("")}</div>`).join("");
+  watch(g.querySelectorAll(".mag-row"), false);
 }
+/* Group photos into editorial rows: a big single, a pair, a trio, a pair... adjusted so
+   no row is too tall (adds a photo) or too short (drops one back). */
+const phoneMQ = matchMedia("(max-width: 760px)");
+function magRows(list) {
+  // Phones: singles and pairs so photos stay big. Larger screens: singles, pairs and trios.
+  const phone = phoneMQ.matches;
+  const pattern = phone ? [1, 2, 2] : [1, 2, 3, 2], minR = phone ? 0.6 : 1.45, maxR = phone ? 2.4 : 4.2, endR = phone ? 0.6 : 1.2;
+  const rows = [], q = list.slice(); let k = 0;
+  const ratio = row => row.reduce((a, x) => a + x.p.w / x.p.h, 0);
+  while (q.length) {
+    let want = pattern[k++ % pattern.length];
+    if (!phone && want === 1 && q[0].p.h > q[0].p.w) want = 3;
+    const row = q.splice(0, want);
+    while (ratio(row) < minR && q.length) row.push(q.shift());
+    while (row.length > 1 && ratio(row) > maxR) q.unshift(row.pop());
+    rows.push(row);
+  }
+  const last = rows[rows.length - 1];
+  if (rows.length > 1 && ratio(last) < endR) rows[rows.length - 2].push(...rows.pop());
+  return rows;
+}
+phoneMQ.addEventListener("change", () => { if (current !== "Home" && $("grid").classList.contains("magflow")) renderGrid(); });
 
 /* Home collage: break photos into rows that exactly fill the width.
    Each row's height is chosen so its photos (at their real shapes) add up to the full width. */
 function layoutCollage() {
-  const g = $("collage"); if (!g || $("index-top").offsetParent === null) return;
+  if ($("index-top").offsetParent !== null) fitCollage($("collage"));
+  const hc = $("home-collage"); if (hc && hc.offsetParent !== null) fitCollage(hc);
+}
+function fitCollage(g) {
+  if (!g) return;
   const frames = [...g.querySelectorAll(".frame")]; if (!frames.length) return;
   const W = g.clientWidth, gap = parseFloat(getComputedStyle(g).columnGap) || 16;
   const target = W < 600 ? 190 : W < 1000 ? 240 : 300;
@@ -905,10 +991,10 @@ function layoutCollage() {
 let collageT = 0;
 addEventListener("resize", () => { clearTimeout(collageT); collageT = setTimeout(layoutCollage, 120); });
 // Re-fit whenever the panel's width changes for any reason (a scrollbar appearing, fonts loading, the window resizing).
-if ("ResizeObserver" in window && $("collage")) {
-  let lastW = 0;
-  new ResizeObserver(([e]) => { const w = Math.round(e.contentRect.width); if (w && w !== lastW) { lastW = w; layoutCollage(); } }).observe($("collage"));
-}
+if ("ResizeObserver" in window) ["collage", "home-collage"].forEach(id => {
+  const el = $(id); if (!el) return; let lastW = 0;
+  new ResizeObserver(([e]) => { const w = Math.round(e.contentRect.width); if (w && w !== lastW) { lastW = w; fitCollage(el); } }).observe(el);
+});
 
 /* Looping carousel: track the centered photo, step with arrows/keys/swipe */
 let stripIdx = 0, loopN = 0, settleT = 0;
@@ -1284,7 +1370,7 @@ addEventListener("scroll", () => {
 }, { passive: true });
 watch(document.querySelectorAll(".bar, .split > *, .future, footer"), false);
 $("grid").addEventListener("click", e => { const b = e.target.closest("button[data-i]"); if (b) openLb(+b.dataset.i); });
-$("collage").addEventListener("click", e => { const b = e.target.closest("button[data-i]"); if (b) openLb(+b.dataset.i); });
+$("collage") && $("collage").addEventListener("click", e => { const b = e.target.closest("button[data-i]"); if (b) openLb(+b.dataset.i); });
 $("lb-close").onclick = closeLb;
 $("lb-prev").onclick = () => lbStep(-1);
 $("lb-next").onclick = () => lbStep(1);
@@ -1326,6 +1412,8 @@ $("contact-form").addEventListener("submit", async e => {
     send.disabled = false; send.textContent = "Send message";
   }
 });
+
+
 
 /* Home slideshow: each photo shows for SLIDE_MS, then fades to the next.
    Pauses on hover/focus, when the tab is hidden, or when the visitor presses pause.
@@ -1371,8 +1459,81 @@ $("home-photo-btn").addEventListener("click", () => {
   const s = slides[slideIdx]; openSingle(s.full || s.img, s.title || "", s.place || "");
 });
 { const _sv = showView; showView = function (...a) { _sv.apply(this, a); syncShow(); }; }
-syncShow();
+
+/* Home layout preview toggle: slideshow vs. the Selected work collage */
+const selectedPhotos = () => SITE.selected.map(src => SITE.photos.find(p => p.src === src)).filter(Boolean);
+$("home-collage").innerHTML = selectedPhotos().map((p, i) => `
+  <figure class="frame" style="--r:${(p.w / p.h).toFixed(4)}">
+    <button type="button" data-i="${i}" aria-label="Open ${p.title}">
+      <div class="ph" style="aspect-ratio:${p.w} / ${p.h}"><img src="${p.src}-800.jpg" srcset="${srcsetFor(p)}" sizes="(max-width: 760px) 60vw, 40vw" width="${p.w}" height="${p.h}" alt="${p.title}" decoding="async"></div>
+    </button>
+  </figure>`).join("");
+$("home-collage").addEventListener("click", e => {
+  const b = e.target.closest("button[data-i]"); if (!b) return;
+  visible = selectedPhotos(); openLb(+b.dataset.i);
+});
+/* Magazine home: cover, three numbered sections, a pull quote, and a closing call to action */
+const MAG = [
+  { t: "cover", src: "hero" },
+  { t: "head", cat: "Street", n: "01" },
+  { t: "row", cls: "stack", srcs: ["street-29", "street-01"] },
+  { t: "row", srcs: ["street-33"] },
+  { t: "row", srcs: ["street-09", "street-05", "street-39"] },
+  { t: "row", cls: "stack", srcs: ["street-36", "street-20"] },
+  { t: "quote" },
+  { t: "head", cat: "Landscape", n: "02" },
+  { t: "row", srcs: ["landscape-54"] },
+  { t: "row", cls: "stack", srcs: ["landscape-38", "landscape-32"] },
+  { t: "row", srcs: ["landscape-14", "landscape-24", "landscape-28"] },
+  { t: "row", srcs: ["landscape-49"] },
+  { t: "row", cls: "stack", srcs: ["landscape-56", "landscape-46"] },
+  { t: "head", cat: "Portrait", n: "03" },
+  { t: "row", cls: "stack", srcs: ["portrait-17", "portrait-19"] },
+  { t: "row", srcs: ["portrait-05", "portrait-09", "portrait-22"] },
+  { t: "row", srcs: ["portrait-27"] },
+  { t: "row", srcs: ["portrait-14", "portrait-01", "portrait-20"] },
+  { t: "end" }
+];
+const magPhotos = [];
+function magImg(src) {
+  const p = SITE.photos.find(x => x.src === "photos/" + src); if (!p) return "";
+  const i = magPhotos.push(p) - 1, r = (p.w / p.h).toFixed(4);
+  return `<button type="button" class="mp" data-mi="${i}" style="--r:${r};--ar:${p.w} / ${p.h}" aria-label="Open ${p.title}"><img src="${p.src}-800.jpg" srcset="${srcsetFor(p)}" sizes="(max-width: 760px) 100vw, 900px" width="${p.w}" height="${p.h}" alt="${p.title}" loading="lazy" decoding="async"></button>`;
+}
+$("home-mag").innerHTML = MAG.map(b => {
+  if (b.t === "cover") return `<div class="mag-cover"><button type="button" class="mp" data-cover style="--ar:3 / 2" aria-label="View cover photo full screen"><img src="${SITE.heroes.Home}" alt="${(SITE.heroInfo.Home || {}).title || "Cover photo"}" decoding="async"></button>
+    <div class="mag-meta"><span>Selected work</span><span>Based in San Francisco</span><span>Street · Landscape · Portrait</span></div></div>`;
+  if (b.t === "head") return `<div class="mag-head" data-cat="${b.cat}"><span class="mag-num">${b.n}</span><h2 class="mag-title">${b.cat}</h2><a class="mag-more" href="#${b.cat.toLowerCase()}">See all ${SITE.photos.filter(p => p.cat === b.cat).length} →</a></div>`;
+  if (b.t === "row") return `<div class="mag-row ${b.cls || ""}">${b.srcs.map(magImg).join("")}</div>`;
+  if (b.t === "quote") return `<blockquote class="mag-quote">When I’m behind the camera, everything else fades away and I’m fully in the moment.<cite>Justin Khyle</cite></blockquote>`;
+  if (b.t === "end") return `<div class="mag-end"><h2>Want photos like these?</h2><p>Sessions are relaxed and easygoing, and you’ll have your photos within a week.</p>
+    <div class="mag-btns"><a class="mag-btn primary" href="#contact">Book a session</a><a class="mag-btn" href="#work">Browse all work</a></div></div>`;
+  return "";
+}).join("");
+$("home-mag").addEventListener("click", e => {
+  const c = e.target.closest("[data-cover]");
+  if (c) { const h = SITE.heroInfo.Home || {}; openSingle(SITE.heroes.Home, h.title || "", h.place || ""); return; }
+  const b = e.target.closest("button[data-mi]"); if (!b) return;
+  visible = magPhotos.slice(); openLb(+b.dataset.mi);
+});
+let homeMode = "mag";
+function setHomeMode(m) {
+  homeMode = m;
+  const collage = m === "collage", mag = m === "mag";
+  document.querySelector(".home-show").hidden = m !== "slides";
+  $("home-collage-wrap").hidden = !collage;
+  $("home-mag").hidden = !mag;
+  document.body.classList.toggle("home-collage-mode", collage);
+  document.body.classList.toggle("home-mag-mode", mag);
+  showHold = m !== "slides";
+  if (collage) requestAnimationFrame(() => fitCollage($("home-collage")));
+  if (mag && !$("home-mag").dataset.watched) { $("home-mag").dataset.watched = 1; requestAnimationFrame(() => watch($("home-mag").querySelectorAll(".mag-row, .mag-head, .mag-quote, .mag-end"), false)); }
+  syncShow();
+}
+setHomeMode(homeMode);
 route();
+
+
 </script>
 
 </body>
