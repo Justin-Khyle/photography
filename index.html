@@ -1285,8 +1285,11 @@ function route() {
   const h = location.hash.slice(1).toLowerCase();
   const cat = SITE.categories.find(c => c.toLowerCase() === h);
   if (cat || h === "work") {
+    const prev = current;
     showView("work");
     selectTab(cat || "Home", { push: false, scroll: false, animate: false });
+    // Moving between the Work page and a collection is a new page: start it at the top
+    if (current !== prev) { scrollTo({ top: 0, behavior: "instant" }); setNavAway(false); }
     announcePage();
     return;
   }
