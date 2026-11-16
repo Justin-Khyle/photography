@@ -1013,7 +1013,7 @@ function renderGrid() {
   $("strip-ctrl").hidden = true; loopN = 0;
   const rows = magRows(visible.map((p, i) => ({ p, i })));
   g.innerHTML = rows.map(row => `<div class="mag-row">${row.map(({ p, i }) =>
-    `<button type="button" class="mp" data-i="${i}" style="--r:${(p.w / p.h).toFixed(4)};--ar:${p.w} / ${p.h}" aria-label="Open ${p.title}"><img src="${p.src}-800.jpg" srcset="${srcsetFor(p)}" sizes="(max-width: 760px) 100vw, ${row.length === 1 ? "1200px" : "700px"}" width="${p.w}" height="${p.h}" alt="${p.title}" loading="lazy" decoding="async"></button>`).join("")}</div>`).join("");
+    `<button type="button" class="mp" data-i="${i}" style="--r:${(p.w / p.h).toFixed(4)};--ar:${p.w} / ${p.h}" aria-label="Open ${p.title}"><img src="${p.src}-800.jpg" ${rowImgAttrs(p, row.map(x => x.p.w / x.p.h))} width="${p.w}" height="${p.h}" alt="${p.title}" loading="lazy" decoding="async"></button>`).join("")}</div>`).join("");
   watch(g.querySelectorAll(".mag-row"), false);
 }
 /* Group photos into editorial rows: a big single, a pair, a trio, a pair... adjusted so
@@ -1197,9 +1197,15 @@ SITE.photos.forEach((p, i) => { p.img = p.src ? p.src + "-1600.jpg" : sampleImag
    Grid and carousel: the browser picks the smallest file that is sharp on this screen.
    Viewer: shows -1600 right away, then swaps in -full once it has loaded, on screens
    big or dense enough to benefit (skipped when the visitor has Data Saver on). */
-function srcsetFor(p) {
+function srcsetFor(p, noFull) {
   const long = Math.max(p.w, p.h), wAt = e => Math.round(p.w * Math.min(1, e / long));
-  return `${p.src}-800.jpg ${wAt(800)}w, ${p.src}-1600.jpg ${wAt(1600)}w, ${p.src}-full.jpg ${p.w}w`;
+  return `${p.src}-800.jpg ${wAt(800)}w, ${p.src}-1600.jpg ${wAt(1600)}w` + (noFull ? "" : `, ${p.src}-full.jpg ${p.w}w`);
+}
+/* How wide a photo in a row really shows, so phones don't download 2MB originals for small tiles.
+   Row photos share the width by aspect ratio; phones never need the -full file in the page. */
+function rowImgAttrs(p, ratios, stacks) {
+  const share = (p.w / p.h) / ratios.reduce((a, b) => a + b, 0);
+  return `srcset="${srcsetFor(p, phoneMQ.matches)}" sizes="${stacks ? "(max-width: 760px) 100vw, " : ""}(min-width: 1300px) ${Math.round(share * 1200)}px, ${(share * 100).toFixed(1)}vw"`;
 }
 const wantsFull = () => {
   const c = navigator.connection; if (c && c.saveData) return false;
@@ -1678,16 +1684,17 @@ const MAG = [
   { t: "end" }
 ];
 const magPhotos = [];
-function magImg(src) {
+function magImg(src, _, srcs, cls) {
   const p = SITE.photos.find(x => x.src === "photos/" + src); if (!p) return "";
+  const ratios = srcs.map(s => SITE.photos.find(x => x.src === "photos/" + s)).filter(Boolean).map(x => x.w / x.h);
   const i = magPhotos.push(p) - 1, r = (p.w / p.h).toFixed(4);
-  return `<button type="button" class="mp" data-mi="${i}" style="--r:${r};--ar:${p.w} / ${p.h}" aria-label="Open ${p.title}"><img src="${p.src}-800.jpg" srcset="${srcsetFor(p)}" sizes="(max-width: 760px) 100vw, 900px" width="${p.w}" height="${p.h}" alt="${p.title}" loading="lazy" decoding="async"></button>`;
+  return `<button type="button" class="mp" data-mi="${i}" style="--r:${r};--ar:${p.w} / ${p.h}" aria-label="Open ${p.title}"><img src="${p.src}-800.jpg" ${rowImgAttrs(p, ratios, /\bstack\b/.test(cls || ""))} width="${p.w}" height="${p.h}" alt="${p.title}" loading="lazy" decoding="async"></button>`;
 }
 $("home-mag").innerHTML = MAG.map(b => {
   if (b.t === "cover") return `<div class="mag-cover"><button type="button" class="mp" data-cover style="--ar:3 / 2" aria-label="View cover photo full screen"><img src="${SITE.heroes.Home}" alt="${(SITE.heroInfo.Home || {}).title || "Cover photo"}" decoding="async"><span class="cover-title" id="cover-title" aria-hidden="true"><span class="ct-name">${[..."Justin Khyle"].map((c, i) => c === " " ? '<span class="ct-sp">&nbsp;</span>' : `<span class="ct-ch" style="--i:${i}">${c}</span>`).join("")}</span><span class="ct-sub">Photography</span></span></button>
     <div class="mag-meta"><span>Selected work</span><span>Based in San Francisco</span><span>Street · Landscape · Portrait</span></div></div>`;
   if (b.t === "head") return `<div class="mag-head" data-cat="${b.cat}"><span class="mag-num">${b.n}</span><h2 class="mag-title">${b.cat}</h2><a class="mag-more" href="#${b.cat.toLowerCase()}">See all ${SITE.photos.filter(p => p.cat === b.cat).length} →</a></div>`;
-  if (b.t === "row") return `<div class="mag-row ${b.cls || ""}">${b.srcs.map(magImg).join("")}</div>`;
+  if (b.t === "row") return `<div class="mag-row ${b.cls || ""}">${b.srcs.map((s, i, a) => magImg(s, i, a, b.cls)).join("")}</div>`;
   if (b.t === "quote") return `<blockquote class="mag-quote">When I’m behind the camera, everything else fades away and I’m fully in the moment.<cite>Justin Khyle</cite></blockquote>`;
   if (b.t === "end") return `<div class="mag-end"><h2>Want photos like these?</h2><p>Sessions are relaxed and easygoing, and you’ll have your photos within a week.</p>
     <div class="mag-btns"><a class="mag-btn primary" href="#contact">Book a session</a><a class="mag-btn" href="#work">Browse all work</a></div></div>`;
