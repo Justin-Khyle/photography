@@ -446,6 +446,14 @@ dl.specs dd { min-width: 0; }
 .portrait .sample { position: absolute; left: .5rem; top: .5rem; font: 600 .62rem/1.2 var(--body); letter-spacing: .1em; text-transform: uppercase; background: rgba(0,0,0,.45); color: #fff; padding: 2px 6px; border-radius: 2px; }
 #about { align-items: start; align-content: start; }
 #about .portrait { margin-top: .4rem; }
+/* No photo yet: story on the left, FAQ on the right; stacks on smaller screens */
+#about.no-portrait { grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 901px) {
+  #about.no-portrait > div { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); column-gap: var(--s5); align-items: start; }
+  #about.no-portrait > div > * { grid-column: 1; }
+  #about.no-portrait .faq { grid-column: 2; grid-row: 2 / span 3; margin-top: .5rem; max-width: none; }
+}
+#about .portrait[hidden] { display: none; }
 dl.specs { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: .35rem var(--s3); margin: var(--s3) 0 0; font-size: .92rem; }
 dl.specs dt { font: 600 .7rem/1.2 var(--body); text-transform: uppercase; letter-spacing: .1em; color: var(--muted); padding-top: .3rem; }
 dl.specs dd { margin: 0; }
@@ -1265,8 +1273,9 @@ function setHero(cat) {
 heroFront.src = heroFor("Home"); $("hero-sample").hidden = !!SITE.heroes.Home;
 updateHeroView("Home");
 Object.keys(SITE.heroes).forEach(heroFor); // pre-build so tab switches are instant
-$("portrait-img").src = SITE.portrait || sampleImage("skin", true, 77);
-$("portrait-sample").hidden = !!SITE.portrait;
+// No photo of me yet: hide the frame and let the About text take the page. Set SITE.portrait to bring it back.
+if (SITE.portrait) $("portrait-img").src = SITE.portrait;
+else { $("portrait-img").closest("figure").hidden = true; $("about").classList.add("no-portrait"); }
 $("yr").textContent = new Date().getFullYear();
 renderNav(); renderFilters(); renderGrid();
 
