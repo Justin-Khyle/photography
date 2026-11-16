@@ -1762,6 +1762,19 @@ const MAP = { w: 1000, h: 1027, land: "M15.8,439.5 18.1,437.5 18.7,434.0 17.1,42
   if (hover) {
     svg.addEventListener("pointerover", e => { const g = e.target.closest(".spot"); if (g) showCard(+g.dataset.i); });
     wrap.addEventListener("pointerleave", hideCard);
+    // Moving off a spot closes its card (a short grace lets the cursor reach the card itself)
+    let leaveT;
+    const later = () => { clearTimeout(leaveT); leaveT = setTimeout(hideCard, 180); };
+    svg.addEventListener("pointerout", e => {
+      const g = e.target.closest(".spot"); if (!g) return;
+      const to = e.relatedTarget;
+      if (to && (g.contains(to) || card.contains(to))) return;
+      if (to && to.closest && to.closest(".spot")) return;
+      later();
+    });
+    svg.addEventListener("pointerover", e => { if (e.target.closest(".spot")) clearTimeout(leaveT); });
+    card.addEventListener("pointerenter", () => clearTimeout(leaveT));
+    card.addEventListener("pointerleave", e => { const to = e.relatedTarget; if (!(to && to.closest && to.closest(".spot"))) later(); });
   }
   $("where-list").addEventListener("click", e => { const b = e.target.closest("button[data-spot]"); if (b) open(spots[+b.dataset.spot]); });
   $("where-list").addEventListener("pointerover", e => { const b = e.target.closest("button[data-spot]"); if (b && hover) showCard(+b.dataset.spot); });
